@@ -5,15 +5,17 @@ using UnityEngine;
 public enum ERythmBase { NONE, FIRST, SECOND, THIRD }
 
 public class RythmSystem : MonoBehaviour
-{ 
+{
     [HideInInspector] private AudioSource audioSBase;
     [HideInInspector] private AudioSource audioSNoBase;
-    [HideInInspector]  private float[] audioSamples = new float[512]; // Array para almacenar los datos de audio
+    [HideInInspector] private float[] audioSamples = new float[512]; // Array para almacenar los datos de audio
 
     [Header("Settings")]
     [SerializeField] private float threshold = 0.1f; // Umbral para detectar el ritmo
     [SerializeField] private float multiplierNeeded = 10000f; // Multiplier que utilizo para mejorar el valor de intensidad que obtengo del volumen del audio, para tener más control a la hora de hacer que se mueva
     public ERythmBase rythmState = ERythmBase.NONE;
+    [SerializeField] private GameObject loopMusic;
+    [SerializeField] private GameObject loopMusicNoBase;
 
     [Header("AudioClips Container")]
     [SerializeField] private AudioClip[] audioBase;
@@ -23,18 +25,10 @@ public class RythmSystem : MonoBehaviour
     
     private void Awake()
     {
-        GameObject loopMusic = GameObject.FindGameObjectWithTag("BaseSoundtrack");
-        GameObject loopMusicNoBase = GameObject.FindGameObjectWithTag("NoBaseSoundtrack");
-        
-        if (loopMusic != null)
-        {
-            audioSBase = loopMusic.GetComponent<AudioSource>();
-            audioSNoBase = loopMusicNoBase.GetComponent<AudioSource>();
-            audioSBase.Play();
-            audioSNoBase.Play();
+        audioSBase = loopMusic.GetComponent<AudioSource>();
+        audioSNoBase = loopMusicNoBase.GetComponent<AudioSource>();
 
-            SetNewState(ERythmBase.SECOND);
-        }
+        SetNewState(rythmState);
     }
     
     private void Update()
@@ -42,6 +36,13 @@ public class RythmSystem : MonoBehaviour
         if (multiplierNeeded < 1)
             multiplierNeeded = 1;
 
+        ManageInputs();
+
+        CalculateRythm();
+    }
+
+    private void ManageInputs()
+    {
         if (Input.GetKeyDown(KeyCode.P))
         {
             SetNewState(ERythmBase.FIRST);
@@ -50,11 +51,14 @@ public class RythmSystem : MonoBehaviour
         {
             SetNewState(ERythmBase.SECOND);
         }
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    SetNewState(ERythmBase.SECOND);
-        //}
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SetNewState(ERythmBase.THIRD);
+        }
+    }
 
+    private void CalculateRythm()
+    {
         // Obtener los datos de audio del audio source
         audioSBase.GetSpectrumData(audioSamples, 0, FFTWindow.BlackmanHarris);
 
@@ -69,7 +73,7 @@ public class RythmSystem : MonoBehaviour
 
         if (IsRythmMoment())
         {
-            //Debug.Log(intensity);
+            Debug.Log(intensity);
         }
     }
 
@@ -81,27 +85,38 @@ public class RythmSystem : MonoBehaviour
         switch (rythmState)
         {
             case ERythmBase.NONE:
+                Debug.Log("NO MUSIC ASSIGNED ON AWAKE");
                 break;
+
             case ERythmBase.FIRST:
-                audioSBase.clip = audioBase[0];
-                audioSNoBase.clip = audioNoBase[0];
-                threshold = 60;
-                multiplierNeeded = 100000;
+
+                InstantiateMusic(audioBase[0], audioNoBase[0], 60, 100000);
+
                 break;
+
             case ERythmBase.SECOND:
-                audioSBase.clip = audioBase[1];
-                audioSNoBase.clip = audioNoBase[1];
-                threshold = 100;
-                multiplierNeeded = 100000;
+
+                InstantiateMusic(audioBase[1], audioNoBase[1], 100, 100000);
+
                 break;
+
             case ERythmBase.THIRD:
-                audioSBase.clip = audioBase[2];
-                audioSNoBase.clip = audioBase[2];
+
+                InstantiateMusic(audioBase[2], null, 90, 100000);
+
                 break;
         }
-
+        
         audioSBase.Play();
         audioSNoBase.Play();
+    }
+
+    private void InstantiateMusic(AudioClip clip1, AudioClip clip2, float _threshold, float _multiplierNeeded)
+    {
+        audioSBase.clip = clip1;
+        audioSNoBase.clip = clip2;
+        threshold = _threshold;
+        multiplierNeeded = _multiplierNeeded;
     }
 
     private void SetNewState(ERythmBase newState)

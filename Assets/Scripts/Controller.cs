@@ -8,7 +8,6 @@ public class Controller : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Animator animator;
-    [SerializeField] private RythmSystem rythmSystem;
     [SerializeField] private GameObject boxDamage;
     private bool isRythmMoment;
     private bool canRythm = false;
@@ -17,29 +16,30 @@ public class Controller : MonoBehaviour
     public float rythmCd = 0.4f;
     public float feedbackDuration = 0.2f;
     public float finalComboDuration = 2f;
-
+    
     [Header("Feedback")]
     [SerializeField] private TrailRenderer trailRenderer_RythmTime;
     [SerializeField] private TrailRenderer trailRender_FinalCombo;
     [SerializeField] private Image imgTest;
     [SerializeField] private GameObject imgCheckTest;
 
-
     private float attackCd = 0.5f;
     private bool attackIsReady = true;
-    private int comboCount;
-    private int maxCombo = 3;
+
+    private Combo combo = new Combo();
 
     private void Awake()
     {
         trailRenderer_RythmTime.emitting = false;
         trailRender_FinalCombo.emitting = false;
+
+        combo.SetMaxCombo(3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        isRythmMoment = rythmSystem.IsRythmMoment();
+        isRythmMoment = RythmSystem.instance.IsRythmBaseMoment();
         if(isRythmMoment)
         {
             canRythm = true;
@@ -58,15 +58,18 @@ public class Controller : MonoBehaviour
                 {
                     Debug.Log("Rythm Time!");
                     PlayCheckRythmMomentFeedback();                    
-                    comboCount++;
+                    combo.SumCombo();
                 }
-
-                if (comboCount >= maxCombo)
+                else
+                {
+                    combo.ComboFailed();
+                }
+                
+                if (combo.ComboAccomplished())
                 {
                     animator.SetTrigger("FinalCombo");
                     trailRender_FinalCombo.emitting = true;
                     Invoke(nameof(ResetEffect2), feedbackDuration);
-                    comboCount = 0;
                 }
                 else
                 {

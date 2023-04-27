@@ -5,47 +5,49 @@ using UnityEngine;
 // this controls corresponds to the ps4 controller but xbox could be the same
 public enum EControlType { SQUARE, CROSS, TRIANGLE, CIRCLE, UP, DOWN, RIGHT, LEFT}
 
+[System.Serializable]
+public struct ButtonsSequence
+{
+    public EControlType[] buttonSequence;
+    public bool isCompleted;
+
+    public Instrument instrument; // the instrument properties to set up the song rythm moment
+}
+
+[System.Serializable]
+public class Instrument
+{
+    public AudioSource instrumentRef;
+
+    public float threshold;
+    public float multiplierNeeded;
+    public float intensity;
+    
+    public bool IsRythmMoment() { return (intensity * instrumentRef.volume) > (threshold * instrumentRef.volume);  }
+}
+
 public class SoundtrackManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct ButtonsSequence
-    {
-        public EControlType[] buttonSequence;
-        public bool isCompleted;
-        public AudioSource instrument;
-        
-        public float multiplierNeeded;
-        public float threshold;
-    }
+    // this instruments are the list to contain every audioSource
+    // is separated from the button sequence because i want the button sequence to be modificable on inspector
+    // and the audio source need to be created and cleaned every time a song is played
+    [SerializeField] protected List<AudioSource> audioSources; 
     
-    [SerializeField] protected List<AudioSource> audioSources;
-    [SerializeField] protected AudioClip[] audios;
+    // those are the audios of every instrument that is played in the song
+    [SerializeField] protected AudioClip[] audios; 
     
-    [SerializeField] protected ButtonsSequence[] buttonSequences;
-    [SerializeField] protected ButtonsSequence currentSequence;
-    [SerializeField] protected float threshold;
-    [SerializeField] protected float multiplierNeeded;
+    [SerializeField] protected ButtonsSequence[] buttonSequences; // all the sequence that will be played in this song
+    [SerializeField] protected ButtonsSequence currentSequence; // this only exists to get the current sequence of buttons that will be played
+    [SerializeField] protected ButtonsSequence baseSequence;
     
-    protected float maxVolume = 0.5f;
-    protected float minVolume = 0f;
-    [HideInInspector] public float intensity;
+    [HideInInspector] protected float maxVolume = 0.5f;
+    [HideInInspector] protected float minVolume = 0f;
+    [HideInInspector] public int currentIteration = 0;
 
     public virtual void InitializeSequence()
     {
-        currentSequence = CorrectInspectorError();
-    }
-
-    private ButtonsSequence CorrectInspectorError()
-    {
-        // Esto lo hago por el bug del inspector, que el primer elemento no se visualiza correctamente
-        if (buttonSequences[0].buttonSequence == null)
-        {
-           return buttonSequences[1];
-        }
-        else
-        {
-            return buttonSequences[0];
-        }
+        currentSequence = buttonSequences[1];
+        baseSequence = buttonSequences[1];
     }
 
     public virtual void RythmOn()
@@ -65,6 +67,16 @@ public class SoundtrackManager : MonoBehaviour
         }
     }
 
+    public virtual void StartConfiguration()
+    {
+
+    }
+
+    public virtual void NextConfiguration()
+    {
+        currentIteration++;
+    }
+
     public virtual void RythmOff()
     {
         bool firstOne = true;
@@ -73,7 +85,7 @@ public class SoundtrackManager : MonoBehaviour
         {
             if (!firstOne)
             {
-                audioSource.volume = minVolume;
+                audioSource.volume = maxVolume;
             }
             else
             {
@@ -81,7 +93,7 @@ public class SoundtrackManager : MonoBehaviour
             }
         }
     }
-    
+
     public void SetInstrumentOn(AudioSource audioSource)
     {
         audioSource.volume = maxVolume;
@@ -91,13 +103,31 @@ public class SoundtrackManager : MonoBehaviour
         audioSource.volume = minVolume;
     }
     
-    public List<AudioSource> GetAudioSources() { return audioSources; }
+    public void SetAudioVolume(AudioSource audioSource, float volume)
+    {
+        audioSource.volume = volume;
+    }
+
+    public List<AudioSource> GetInstruments() { return audioSources; }
     public AudioClip[] GetAudios() { return audios; }
-    public AudioClip GetAudioBase() { return audios[0]; }
-    public float GetThreshold() { return threshold; }
-    public float GetMultiplierNeeded() { return multiplierNeeded; }
+    public float GetThreshold() { return currentSequence.instrument.threshold; }
+    public float GetMultiplierNeeded() { return currentSequence.instrument.multiplierNeeded; }
     public void AddAudioSource(AudioSource audioSource) { audioSources.Add(audioSource); }
-    public void ClearAudioSources() { audioSources.Clear(); }
+    public void SetInstrumentAudioSource(AudioSource audioSource, int index) 
+    {
+        // starts at 1 for the inspector error
+        for (int i = 1; i < buttonSequences.Length; i++)
+        {
+            if (i == index + 1)
+            {
+                buttonSequences[i].instrument.instrumentRef = audioSource;
+                break;
+            }
+        }
+    }
     public ButtonsSequence GetCurrentSequence() { return currentSequence; }
-    public bool RythmMoment() { return intensity > currentSequence.threshold; }
+    public ButtonsSequence GetBaseSequence() { return baseSequence; }
+    public ButtonsSequence[] GetAllButtonsSequence() { return buttonSequences; }
+    //public void SetCurrentBase(AudioSource audioSource) { currentSequence.instrument = audioSource; }
+    //public AudioSource GetCurrentBase(AudioSource audioSource) { return currentSequence.instrument; }
 }

@@ -9,31 +9,32 @@ public class ButtonSequenceController : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject exampleSequenceContainer;
     [SerializeField] private GameObject sequenceContainer;
+    [SerializeField] public List<GameObject> currentExampleSequence;
+    [SerializeField] public List<GameObject> currentSequence;
+    [SerializeField] public GameObject currentControlToShow;
     
     [Space]
     [Header("Buttons Image")]
-    [SerializeField] private Image square;
-    [SerializeField] private Image cross;
-    [SerializeField] private Image triangle;
-    [SerializeField] private Image circle;
+    [SerializeField] private GameObject square;
+    [SerializeField] private GameObject cross;
+    [SerializeField] private GameObject triangle;
+    [SerializeField] private GameObject circle;
     
-    [SerializeField] private Image up;
-    [SerializeField] private Image down;
-    [SerializeField] private Image right;
-    [SerializeField] private Image left;
+    [SerializeField] private GameObject up;
+    [SerializeField] private GameObject down;
+    [SerializeField] private GameObject right;
+    [SerializeField] private GameObject left;
     
-    private void Start()
-    {
-        EControlType[] newSequence = RythmSystem.instance.soundtrackManager.GetCurrentSequence().buttonSequence;
-        CreateSequence(newSequence);
-    }
 
-    private void CreateSequence(EControlType[] controlType)
+    public void CreateSequence(EControlType[] controlType)
     {
+        ClearSequence();
+
         foreach (EControlType control in controlType)
         {
             HandleControlType(control);
         }
+        currentControlToShow = currentExampleSequence[0];
     }
 
     private void HandleControlType(EControlType control)
@@ -82,14 +83,55 @@ public class ButtonSequenceController : MonoBehaviour
         {
             GameObject.Destroy(child.gameObject);
         }
+
+        currentExampleSequence.Clear();
+        currentSequence.Clear();
     }
     
     private void AddControl(GameObject button)
     {
         GameObject newButtonSequence = Instantiate(button, sequenceContainer.transform);
         newButtonSequence.SetActive(false);
-        
+        currentExampleSequence.Add(newButtonSequence);
+
         GameObject newButtonExampleSequence = Instantiate(button, exampleSequenceContainer.transform);
         newButtonExampleSequence.SetActive(false);
+        currentSequence.Add(newButtonExampleSequence);
+    }
+    
+    public void ShowOnRythmExample()
+    {
+        currentControlToShow.SetActive(true);
+        NextControlExample();
+    }
+    
+    private void NextControlExample()
+    {
+        for(int i = 0; i < currentExampleSequence.ToArray().Length - 1; i++)
+        {
+            if (currentExampleSequence[i] == currentControlToShow)
+            {
+                if (currentExampleSequence[i + 1] != null)
+                {
+                    currentControlToShow = currentExampleSequence[i + 1];
+                }
+                break;
+            }
+        }
+    }
+
+    private void NextControl()
+    {
+        for (int i = 0; i < currentSequence.ToArray().Length - 1; i++)
+        {
+            if (currentSequence[i] == currentControlToShow)
+            {
+                if (currentSequence[i + 1] != null)
+                {
+                    currentControlToShow = currentSequence[i + 1];
+                }
+                break;
+            }
+        }
     }
 }

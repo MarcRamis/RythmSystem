@@ -24,11 +24,6 @@ public class RythmSystem : MonoBehaviour
     
     public static RythmSystem instance;
 
-    private float threshold = 0.1f; // Umbral para detectar el ritmo
-    private float multiplierNeeded = 10000f; // Multiplier que utilizo para mejorar el valor de intensidad que obtengo del volumen del audio, para tener más control a la hora de hacer que se mueva
-    private float intensity;
-    private float extraIntensity;
-
     private void Awake()
     {
         if (instance == null)
@@ -41,11 +36,11 @@ public class RythmSystem : MonoBehaviour
     private void Update()
     {
         CheckIfMusicFinalized();
-        ManageInputs();
+        ManageInputs(); // para testear rápido diferentes canciones
 
         HandleRythmMode(rythmMode);
     }
-    
+
     private void ManageInputs()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -57,42 +52,6 @@ public class RythmSystem : MonoBehaviour
             }
             SetNewState(soundtrackState);
         }
-    }
-    
-    private void CalculateRythm(AudioSource audioSource)
-    {
-        // Obtener los datos de audio del audio source
-        audioSource.GetSpectrumData(audioSamples, 0, FFTWindow.BlackmanHarris);
-
-        // Sumar los valores absolutos de las muestras de audio para obtener una medida de la intensidad del ritmo
-        float sum = 0f;
-        for (int i = 0; i < audioSamples.Length; i++)
-        {
-            sum += Mathf.Abs(audioSamples[i]);
-        }
-        intensity = sum / audioSamples.Length;
-        intensity *= multiplierNeeded;
-
-        if (IsRythmMoment())
-        {
-            //Debug.Log(intensity);
-        }
-    }
-    
-    private void CalculateExtraRythm(AudioSource audioSource)
-    {
-        // Obtener los datos de audio del audio source
-        audioSource.GetSpectrumData(audioSamples, 0, FFTWindow.BlackmanHarris);
-
-        // Sumar los valores absolutos de las muestras de audio para obtener una medida de la intensidad del ritmo
-        float sum = 0f;
-        for (int i = 0; i < audioSamples.Length; i++)
-        {
-            sum += Mathf.Abs(audioSamples[i]);
-        }
-        
-        soundtrackManager.intensity = sum / audioSamples.Length;
-        soundtrackManager.intensity *= soundtrackManager.GetCurrentSequence().multiplierNeeded;
     }
 
     private void HandleRythmState(ESoundtracks newState)
@@ -134,7 +93,7 @@ public class RythmSystem : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
     }
-
+    
     private void InitSoundtrack(SoundtrackManager _soundtrackManager)
     {
         soundtrackManager = _soundtrackManager;
@@ -142,14 +101,15 @@ public class RythmSystem : MonoBehaviour
         ClearChildren(soundtrackParent.transform);
         bool firstOne = true;
         
-        foreach (AudioClip audioClip in soundtrackManager.GetAudios())
+        for(int i = 0; i < soundtrackManager.GetAudios().Length; i++)
         {
             GameObject gameObject = Instantiate(soundtrackPrefab, soundtrackParent.transform);
             AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-            audioSource.clip = audioClip;
+            audioSource.clip = soundtrackManager.GetAudios()[i];
             audioSource.Play();
 
             soundtrackManager.AddAudioSource(audioSource);
+            soundtrackManager.SetInstrumentAudioSource(audioSource, i);
 
             if (firstOne)
             {
@@ -157,14 +117,13 @@ public class RythmSystem : MonoBehaviour
                 firstOne = false;
             }
         }
-        
-        threshold = soundtrackManager.GetThreshold();
-        multiplierNeeded = soundtrackManager.GetMultiplierNeeded();
-    }
 
+        soundtrackManager.InitializeSequence();
+    }
+    
     private void ReloadSong()
     {
-        foreach (AudioSource audioSource in soundtrackManager.GetAudioSources())
+        foreach (AudioSource audioSource in soundtrackManager.GetInstruments())
         {
             audioSource.Play();
         }
@@ -172,7 +131,7 @@ public class RythmSystem : MonoBehaviour
     
     private void CheckIfMusicFinalized()
     {
-        foreach (AudioSource audioSource in soundtrackManager.GetAudioSources())
+        foreach (AudioSource audioSource in soundtrackManager.GetInstruments())
         {
             if (audioSource.isPlaying)
             {
@@ -191,35 +150,57 @@ public class RythmSystem : MonoBehaviour
         HandleRythmState(soundtrackState);
     }
     
-    private void SetNewMode(ERythmMode newState)
+    public void SetNewMode(ERythmMode newState)
     {
         rythmMode = newState;
     }
     
     private void HandleRythmMode(ERythmMode rythmMode)
     {
-        CalculateRythm(audioBase);
+        CalculateRythmMoment(soundtrackManager.GetBaseSequence().instrument);
 
         switch (rythmMode)
         {
             case ERythmMode.BASE:
 
                 break;
-            case ERythmMode.SIMON:
 
-                //CalculateExtraRythm(audioExtraBase);
+            case ERythmMode.SIMON:
+                
+                for (int i = 0; i < soundtrackManager.GetAllButtonsSequence().Length; i++)
+                {
+                    if (i > 1) // inspector bug..
+                    {
+                        CalculateRythmMoment(soundtrackManager.GetAllButtonsSequence()[i].instrument);
+                    }
+                }
 
                 break;
         }
     }
 
-    public bool IsRythmMoment()
+    private void CalculateRythmMoment(Instrument instrument)
     {
-        return intensity > threshold;
+        // Obtener los datos de audio del audio source
+        instrument.instrumentRef.GetSpectrumData(audioSamples, 0, FFTWindow.BlackmanHarris);
+
+        // Sumar los valores absolutos de las muestras de audio para obtener una medida de la intensidad del ritmo
+        float sum = 0f;
+        for (int i = 0; i < audioSamples.Length; i++)
+        {
+            sum += Mathf.Abs(audioSamples[i]);
+        }
+        instrument.intensity = sum / audioSamples.Length;
+        instrument.intensity *= instrument.multiplierNeeded;
+    }
+
+    public bool IsRythmBaseMoment()
+    {
+        return soundtrackManager.GetBaseSequence().instrument.IsRythmMoment();
     }
     
-    public bool IsRythmExtraMoment(float _intensity, float _threshold)
+    public bool IsRythmSimonMoment()
     {
-        return _intensity > _threshold;
+        return soundtrackManager.GetCurrentSequence().instrument.IsRythmMoment();
     }
 }

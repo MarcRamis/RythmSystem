@@ -24,7 +24,6 @@ public class ButtonSequenceController : MonoBehaviour
     [SerializeField] private GameObject down;
     [SerializeField] private GameObject right;
     [SerializeField] private GameObject left;
-    
 
     public void CreateSequence(EControlType[] controlType)
     {
@@ -92,46 +91,62 @@ public class ButtonSequenceController : MonoBehaviour
     {
         GameObject newButtonSequence = Instantiate(button, sequenceContainer.transform);
         newButtonSequence.SetActive(false);
-        currentExampleSequence.Add(newButtonSequence);
+        currentSequence.Add(newButtonSequence);
 
         GameObject newButtonExampleSequence = Instantiate(button, exampleSequenceContainer.transform);
         newButtonExampleSequence.SetActive(false);
-        currentSequence.Add(newButtonExampleSequence);
+        currentExampleSequence.Add(newButtonExampleSequence);
     }
     
-    public void ShowOnRythmExample()
-    {
+    public void ShowOnRythm(List<GameObject> sequence)
+    { 
         currentControlToShow.SetActive(true);
-        NextControlExample();
+        NextControl(sequence);
     }
     
-    private void NextControlExample()
+    private void NextControl(List<GameObject> sequence)
     {
-        for(int i = 0; i < currentExampleSequence.ToArray().Length - 1; i++)
+        for(int i = 0; i < sequence.ToArray().Length - 1; i++)
         {
-            if (currentExampleSequence[i] == currentControlToShow)
+            if (sequence[i] == currentControlToShow)
             {
-                if (currentExampleSequence[i + 1] != null)
+                if (sequence[i + 1] != null)
                 {
-                    currentControlToShow = currentExampleSequence[i + 1];
+                    currentControlToShow = sequence[i + 1];
+                    RythmSystem.instance.soundtrackManager.GetCurrentSequence().NextLoopControl(i);;
+                    break;
                 }
-                break;
             }
         }
+    }
+    
+    public bool CheckIfLoopFinished(List<GameObject> sequence)
+    {
+        foreach(GameObject sq in sequence)
+        {
+            if (sq.activeSelf == false)
+                return false;
+        }
+
+        return true;
     }
 
-    private void NextControl()
+    public void FinishedMode(ESimonMode simonMode)
     {
-        for (int i = 0; i < currentSequence.ToArray().Length - 1; i++)
+        switch (simonMode)
         {
-            if (currentSequence[i] == currentControlToShow)
-            {
-                if (currentSequence[i + 1] != null)
-                {
-                    currentControlToShow = currentSequence[i + 1];
-                }
+            case ESimonMode.EXAMPLE_SIMON:
+                
+                RythmSystem.instance.soundtrackManager.GetCurrentSequence().SetInitControl();
+                currentControlToShow = currentSequence[0];
+                RythmSystem.instance.SetNewSimonMonde(ESimonMode.SIMONSAYS);
+
                 break;
-            }
+            case ESimonMode.SIMONSAYS:
+                break;
         }
     }
+   
+    public List<GameObject> GetPlayerSequence() { return currentSequence; }
+    public List<GameObject> GetExampleSequence() { return currentExampleSequence; }
 }

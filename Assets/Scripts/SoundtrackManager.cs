@@ -3,28 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // this controls corresponds to the ps4 controller but xbox could be the same
-public enum EControlType { SQUARE, CROSS, TRIANGLE, CIRCLE, UP, DOWN, RIGHT, LEFT}
-
-[System.Serializable]
-public struct ButtonsSequence
-{
-    public EControlType[] buttonSequence;
-    public bool isCompleted;
-
-    public Instrument instrument; // the instrument properties to set up the song rythm moment
-}
-
-[System.Serializable]
-public class Instrument
-{
-    public AudioSource instrumentRef;
-
-    public float threshold;
-    public float multiplierNeeded;
-    public float intensity;
-    
-    public bool IsRythmMoment() { return (intensity * instrumentRef.volume) > (threshold * instrumentRef.volume);  }
-}
+public enum EControlType { NONE, SQUARE, CROSS, TRIANGLE, CIRCLE, UP, DOWN, RIGHT, LEFT}
 
 public class SoundtrackManager : MonoBehaviour
 {
@@ -46,6 +25,20 @@ public class SoundtrackManager : MonoBehaviour
 
     public virtual void InitializeSequence()
     {
+        bool firstOne = true;
+
+        foreach (ButtonsSequence sq in buttonSequences)
+        {
+            if (!firstOne)
+            {
+                sq.SetInitControl();
+            }
+            else
+            {
+                firstOne = false;
+            }
+        }
+
         currentSequence = buttonSequences[1];
         baseSequence = buttonSequences[1];
     }
@@ -128,6 +121,4 @@ public class SoundtrackManager : MonoBehaviour
     public ButtonsSequence GetCurrentSequence() { return currentSequence; }
     public ButtonsSequence GetBaseSequence() { return baseSequence; }
     public ButtonsSequence[] GetAllButtonsSequence() { return buttonSequences; }
-    //public void SetCurrentBase(AudioSource audioSource) { currentSequence.instrument = audioSource; }
-    //public AudioSource GetCurrentBase(AudioSource audioSource) { return currentSequence.instrument; }
 }

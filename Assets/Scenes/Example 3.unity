@@ -1162,6 +1162,7 @@ MonoBehaviour:
   soundtrackState: 3
   rythmMode: 1
   audioExtraBase: {fileID: 0}
+  simonMode: 0
 --- !u!114 &1385000187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,6 +1183,7 @@ MonoBehaviour:
   currentSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1190,6 +1192,7 @@ MonoBehaviour:
   baseSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1217,6 +1220,7 @@ MonoBehaviour:
   currentSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1225,6 +1229,7 @@ MonoBehaviour:
   baseSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1252,6 +1257,7 @@ MonoBehaviour:
   currentSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1260,6 +1266,7 @@ MonoBehaviour:
   baseSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1288,13 +1295,15 @@ MonoBehaviour:
   buttonSequences:
   - buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
       multiplierNeeded: 0
       intensity: 0
-  - buttonSequence: 0100000001000000010000000100000001000000
+  - buttonSequence: 030000000300000001000000010000000100000004000000040000000400000004000000
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 99
@@ -1302,13 +1311,15 @@ MonoBehaviour:
       intensity: 0
   - buttonSequence: 02000000020000000100000001000000
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 60
       multiplierNeeded: 100000
       intensity: 0
-  - buttonSequence: 00000000020000000200000002000000
+  - buttonSequence: 01000000020000000200000002000000
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 90
@@ -1316,13 +1327,15 @@ MonoBehaviour:
       intensity: 0
   - buttonSequence: 03000000020000000200000002000000
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 50
       multiplierNeeded: 100000
       intensity: 0
-  - buttonSequence: 00000000000000000200000002000000
+  - buttonSequence: 01000000010000000200000002000000
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 100
@@ -1331,6 +1344,7 @@ MonoBehaviour:
   currentSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
@@ -1339,12 +1353,57 @@ MonoBehaviour:
   baseSequence:
     buttonSequence: 
     isCompleted: 0
+    currentLoopControl: 0
     instrument:
       instrumentRef: {fileID: 0}
       threshold: 0
       multiplierNeeded: 0
       intensity: 0
   currentIteration: 0
+--- !u!1 &1392991394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1392991395}
+  - component: {fileID: 1392991396}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1392991395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392991394}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.063175, y: 5.345804, z: 6.717822}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1392991396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392991394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8286ab61fb930974f94031c43fa6ac49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1403946850 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 0bb0fab3412661f49a81ce6845495300, type: 3}
@@ -1500,12 +1559,57 @@ MonoBehaviour:
   animator: {fileID: 769896732}
   boxDamage: {fileID: 0}
   rythmCd: 0.5
-  feedbackDuration: 0.5
+  feedbackDuration: 0.2
   finalComboDuration: 2
   trailRenderer_RythmTime: {fileID: 1850925807}
   trailRender_FinalCombo: {fileID: 1403946852}
   imgTest: {fileID: 141019509}
   imgCheckTest: {fileID: 62232012}
+--- !u!1 &1799399108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1799399109}
+  - component: {fileID: 1799399110}
+  m_Layer: 0
+  m_Name: SimonController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1799399109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799399108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.063175, y: 5.345804, z: 6.717822}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1799399110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799399108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3cfdd6a5859b594ca8609c55910baa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rythmSimonController: {fileID: 1883277820}
 --- !u!1 &1836822796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,5 +1932,4 @@ MonoBehaviour:
   imgTest2: {fileID: 1861690354}
   imgTest3: {fileID: 1192979181}
   imgTest4: {fileID: 524959807}
-  rythmCd: 0.5
-  rythmOnceCd: 0.1
+  rythmCd: 0.2

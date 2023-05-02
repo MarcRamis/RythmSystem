@@ -13,7 +13,7 @@ public class Controller : MonoBehaviour
     private bool canRythm = false;
     
     [Header("Settings")]
-    public float rythmCd = 0.4f;
+    public float rythmCd = 0.5f;
     public float feedbackDuration = 0.2f;
     public float finalComboDuration = 2f;
     

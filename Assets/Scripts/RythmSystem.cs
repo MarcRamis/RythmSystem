@@ -6,6 +6,7 @@ using UnityEngine;
 public enum ESoundtracks { FIRST, SECOND, THIRD, FOURTH, COUNT}
 
 public enum ERythmMode { BASE, SIMON}
+public enum ESimonMode { EXAMPLE_SIMON, SIMONSAYS }
 
 public class RythmSystem : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class RythmSystem : MonoBehaviour
     [HideInInspector] public AudioSource audioExtraBase;
     [HideInInspector] private float[] audioSamples = new float[512]; // Array para almacenar los datos de audio
     
+    public ESimonMode simonMode = ESimonMode.EXAMPLE_SIMON;
+
     public static RythmSystem instance;
 
     private void Awake()
@@ -202,5 +205,10 @@ public class RythmSystem : MonoBehaviour
     public bool IsRythmSimonMoment()
     {
         return soundtrackManager.GetCurrentSequence().instrument.IsRythmMoment();
+    }
+
+    public void SetNewSimonMonde(ESimonMode eSimonMode)
+    {
+        simonMode = eSimonMode;
     }
 }

@@ -3,14 +3,9 @@ using UnityEngine.UI;
 
 public class DaniSongSimonController : RythmSimonController
 {
-    private void Start()
+    public override void HandleSimon(ESimonMode simonMode)
     {
-        StartSimon();
-    }
-
-    public override void HandleSimon()
-    {
-        base.HandleSimon();
+        base.HandleSimon(simonMode);
         
         switch (simonMode)
         {
@@ -18,12 +13,32 @@ public class DaniSongSimonController : RythmSimonController
                 
                 switch (RythmSystem.instance.soundtrackManager.currentIteration)
                 {
+                    case 1:                        
+                        
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+                        break;
+
+                    default:
+                        break;
+                }
+                
+
+
+                break;
+                
+            case ESimonMode.SIMONSAYS:
+
+                switch (RythmSystem.instance.soundtrackManager.currentIteration)
+                {
                     case 1:
 
-                        Debug.Log("xd");
+                        
 
-                        buttonSequenceController.currentControlToShow.SetActive(true);
-                        buttonSequenceController.ShowOnRythmExample();
                         break;
 
                     case 2:
@@ -36,11 +51,6 @@ public class DaniSongSimonController : RythmSimonController
                         break;
                 }
 
-                break;
-                
-            case ESimonMode.SIMONSAYS:
-
-                
                 break;
         }
     }

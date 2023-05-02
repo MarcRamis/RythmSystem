@@ -1,19 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public enum ESimonMode { EXAMPLE_SIMON, SIMONSAYS }
 
 public class RythmSimonController : MonoBehaviour
 {
     [SerializeField] protected ButtonSequenceController buttonSequenceController;
-
+    
     [SerializeField] protected Image imgTest;
     [SerializeField] protected Image imgTest2;
     [SerializeField] protected Image imgTest3;
     [SerializeField] protected Image imgTest4;
-    
-    protected ESimonMode simonMode = ESimonMode.EXAMPLE_SIMON;
     
     protected bool rythmTest1;
     protected bool rythmTest2;
@@ -26,13 +23,14 @@ public class RythmSimonController : MonoBehaviour
     
     [Header("Settings")]
     [SerializeField] protected float rythmCd = 0.5f;
+    [SerializeField] protected float rythmButtonsCd = 0.5f;
     protected bool canRythm = false;
+    protected bool canRythmButtons = false;
     protected bool rythmOnce = true;
-
+    protected bool rythmOnceButtons = true;
+    
     private void Update()
-    {
-        Test();
-
+    {   
         if (simonIsPlaying)
         {
             rythmMoment = buttonsSequence.instrument.IsRythmMoment();
@@ -40,7 +38,18 @@ public class RythmSimonController : MonoBehaviour
             if (rythmMoment)
             {
                 canRythm = true;
+                canRythmButtons = true;
                 Invoke(nameof(ResetRythm), rythmCd);
+                Invoke(nameof(ResetRythmButtons), rythmButtonsCd);
+            }
+
+            if (InputController.instance.CheckIfCorrectButton(buttonsSequence.currentLoopControl) && rythmOnceButtons)
+            {
+                if (canRythmButtons)
+                {
+                    rythmOnceButtons = false;
+                    HandleSimon(ESimonMode.SIMONSAYS);
+                }
             }
 
             if (canRythm)
@@ -48,7 +57,7 @@ public class RythmSimonController : MonoBehaviour
                 if (rythmOnce)
                 {
                     rythmOnce = false;
-                    HandleSimon();
+                    HandleSimon(ESimonMode.EXAMPLE_SIMON);
                 }
             }
         }
@@ -64,33 +73,36 @@ public class RythmSimonController : MonoBehaviour
         canRythm = false;
         rythmOnce = true;
     }
+    
+    private void ResetRythmButtons()
+    {
+        canRythmButtons = false;
+        rythmOnceButtons = true;
+    }
 
-    public virtual void HandleSimon()
+    public virtual void HandleSimon(ESimonMode simonMode)
     {
         switch (simonMode)
         {
             case ESimonMode.EXAMPLE_SIMON:
 
-                switch (RythmSystem.instance.soundtrackManager.currentIteration)
+                buttonSequenceController.ShowOnRythm(buttonSequenceController.GetExampleSequence());
+                
+                if (buttonSequenceController.CheckIfLoopFinished(buttonSequenceController.GetExampleSequence()))
                 {
-                    case 1:
-
-                        break;
-
-                    case 2:
-                        break;
-
-                    case 3:
-                        break;
-
-                    default:
-                        break;
+                    buttonSequenceController.FinishedMode(RythmSystem.instance.simonMode);
                 }
 
                 break;
 
             case ESimonMode.SIMONSAYS:
+                
+                buttonSequenceController.ShowOnRythm(buttonSequenceController.GetPlayerSequence());
 
+                if (buttonSequenceController.CheckIfLoopFinished(buttonSequenceController.GetPlayerSequence()))
+                {
+                    buttonSequenceController.FinishedMode(RythmSystem.instance.simonMode);
+                }
 
                 break;
         }
@@ -144,23 +156,27 @@ public class RythmSimonController : MonoBehaviour
     {
         imgTest4.color = Color.white;
     }
-
-    protected void StartSimon()
+    
+    public void StartSimon()
     {
         buttonsSequence = RythmSystem.instance.soundtrackManager.GetCurrentSequence();
-
-        simonIsPlaying = true;
 
         EControlType[] newSequence = RythmSystem.instance.soundtrackManager.GetCurrentSequence().buttonSequence;
         buttonSequenceController.CreateSequence(newSequence);
         RythmSystem.instance.soundtrackManager.StartConfiguration();
-    }
 
+        PlaySimon();
+    }
     protected void NextSequence()
     {
     }
 
-    protected void ExitSimon()
+
+    protected void PlaySimon()
+    {
+        simonIsPlaying = true;
+    }
+    protected void StopSimon()
     {
         simonIsPlaying = false;
     }

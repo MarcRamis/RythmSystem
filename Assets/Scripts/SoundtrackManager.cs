@@ -38,7 +38,7 @@ public class SoundtrackManager : MonoBehaviour
                 firstOne = false;
             }
         }
-
+        
         currentSequence = buttonSequences[1];
         baseSequence = buttonSequences[1];
     }

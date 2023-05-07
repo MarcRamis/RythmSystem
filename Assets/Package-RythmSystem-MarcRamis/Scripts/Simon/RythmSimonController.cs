@@ -28,21 +28,16 @@ public class RythmSimonController : MonoBehaviour
     protected bool canRythmButtons = false;
     protected bool rythmOnce = true;
     protected bool rythmOnceButtons = true;
-    
+
+    private void Awake()
+    {
+        RythmSystem.instance.beat.OnBeat += Rythm;
+    }
+
     private void Update()
     {   
         if (simonIsPlaying)
         {
-            rythmMoment = buttonsSequence.instrument.IsRythmMoment();
-
-            if (rythmMoment)
-            {
-                canRythm = true;
-                canRythmButtons = true;
-                Invoke(nameof(ResetRythm), rythmCd);
-                Invoke(nameof(ResetRythmButtons), rythmButtonsCd);
-            }
-
             if (InputController.instance.CheckIfCorrectButton(buttonsSequence.currentLoopControl) && rythmOnceButtons)
             {
                 if (canRythmButtons)
@@ -61,6 +56,14 @@ public class RythmSimonController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Rythm()
+    {
+        canRythm = true;
+        canRythmButtons = true;
+        Invoke(nameof(ResetRythm), rythmCd);
+        Invoke(nameof(ResetRythmButtons), rythmButtonsCd);
     }
 
     private void ResetOnce()
@@ -110,10 +113,10 @@ public class RythmSimonController : MonoBehaviour
 
     private void Test()
     {
-        rythmTest1 = RythmSystem.instance.soundtrackManager.GetAllButtonsSequence()[2].instrument.IsRythmMoment();
-        rythmTest2 = RythmSystem.instance.soundtrackManager.GetAllButtonsSequence()[3].instrument.IsRythmMoment();
-        rythmTest3 = RythmSystem.instance.soundtrackManager.GetAllButtonsSequence()[4].instrument.IsRythmMoment();
-        rythmTest4 = RythmSystem.instance.soundtrackManager.GetAllButtonsSequence()[5].instrument.IsRythmMoment();
+        rythmTest1 = RythmSystem.instance.soundtrackManager.GetAllInstruments()[2].IsIntensityGreater();
+        rythmTest2 = RythmSystem.instance.soundtrackManager.GetAllInstruments()[3].IsIntensityGreater();
+        rythmTest3 = RythmSystem.instance.soundtrackManager.GetAllInstruments()[4].IsIntensityGreater();
+        rythmTest4 = RythmSystem.instance.soundtrackManager.GetAllInstruments()[5].IsIntensityGreater();
 
         if (rythmTest1)
         {
@@ -159,9 +162,9 @@ public class RythmSimonController : MonoBehaviour
     
     public void StartSimon()
     {
-        buttonsSequence = RythmSystem.instance.soundtrackManager.GetCurrentSequence();
+        buttonsSequence = RythmSystem.instance.soundtrackManager.GetBaseSequence();
 
-        EControlType[] newSequence = RythmSystem.instance.soundtrackManager.GetCurrentSequence().buttonSequence;
+        EControlType[] newSequence = RythmSystem.instance.soundtrackManager.GetBaseSequence().buttonSequence;
         buttonSequenceController.CreateSequence(newSequence);
         RythmSystem.instance.soundtrackManager.StartConfiguration();
 

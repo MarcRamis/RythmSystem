@@ -34,19 +34,12 @@ public class Controller : MonoBehaviour
         trailRender_FinalCombo.emitting = false;
 
         combo.SetMaxCombo(3);
+        RythmSystem.instance.beat.OnBeat += Rythm;
     }
 
     // Update is called once per frame
     void Update()
     {
-        isRythmMoment = RythmSystem.instance.IsRythmBaseMoment();
-        if(isRythmMoment)
-        {
-            canRythm = true;
-            PlayRythmMomentFeedback();
-            Invoke(nameof(ResetRythm), rythmCd);
-        }
-
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (attackIsReady)
@@ -77,6 +70,13 @@ public class Controller : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Rythm()
+    {
+        canRythm = true;
+        PlayRythmMomentFeedback();
+        Invoke(nameof(ResetRythm), rythmCd);
     }
 
     private void PlayRythmMomentFeedback()

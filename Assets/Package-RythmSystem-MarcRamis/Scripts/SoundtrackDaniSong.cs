@@ -4,20 +4,8 @@
     {
     }
     
-    public override void RythmOn()
-    {
-    }
-
-    public override void RythmOff()
-    {
-    }
-
     public override void StartConfiguration()
     {
-        SetInstrumentOff(audioSources[2]);
-        SetInstrumentOff(audioSources[3]);
-        SetInstrumentOff(audioSources[4]);
-
         NextConfiguration();
     }
     
@@ -28,9 +16,6 @@
         switch (currentIteration)
         {
             case 1:
-                
-                SetAudioVolume(audioSources[0], maxVolume);
-                SetAudioVolume(audioSources[1], 0.2f);
                 
                 break;
 

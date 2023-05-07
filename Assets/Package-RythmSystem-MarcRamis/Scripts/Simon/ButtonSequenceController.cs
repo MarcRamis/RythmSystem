@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class ButtonSequenceController : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] protected List<ButtonsSequence> sequences; // all the sequence that will be played in this song
+    [HideInInspector] protected ButtonsSequence currentSequence;
+    
     [SerializeField] private GameObject exampleSequenceContainer;
     [SerializeField] private GameObject sequenceContainer;
-    [SerializeField] public List<GameObject> currentExampleSequence;
-    [SerializeField] public List<GameObject> currentSequence;
+    [SerializeField] public List<GameObject> currentExampleSequenceGO;
+    [SerializeField] public List<GameObject> currentSequenceGO;
     [SerializeField] public GameObject currentControlToShow;
     
     [Space]
@@ -25,6 +28,13 @@ public class ButtonSequenceController : MonoBehaviour
     [SerializeField] private GameObject right;
     [SerializeField] private GameObject left;
 
+    public ButtonSequenceController instance;
+
+    public void Awake()
+    {
+        instance = this;
+    }
+
     public void CreateSequence(EControlType[] controlType)
     {
         ClearSequence();
@@ -33,7 +43,7 @@ public class ButtonSequenceController : MonoBehaviour
         {
             HandleControlType(control);
         }
-        currentControlToShow = currentExampleSequence[0];
+        currentControlToShow = currentExampleSequenceGO[0];
     }
 
     private void HandleControlType(EControlType control)
@@ -83,19 +93,19 @@ public class ButtonSequenceController : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        currentExampleSequence.Clear();
-        currentSequence.Clear();
+        currentExampleSequenceGO.Clear();
+        currentSequenceGO.Clear();
     }
     
     private void AddControl(GameObject button)
     {
         GameObject newButtonSequence = Instantiate(button, sequenceContainer.transform);
         newButtonSequence.SetActive(false);
-        currentSequence.Add(newButtonSequence);
+        currentSequenceGO.Add(newButtonSequence);
 
         GameObject newButtonExampleSequence = Instantiate(button, exampleSequenceContainer.transform);
         newButtonExampleSequence.SetActive(false);
-        currentExampleSequence.Add(newButtonExampleSequence);
+        currentExampleSequenceGO.Add(newButtonExampleSequence);
     }
     
     public void ShowOnRythm(List<GameObject> sequence)
@@ -113,7 +123,7 @@ public class ButtonSequenceController : MonoBehaviour
                 if (sequence[i + 1] != null)
                 {
                     currentControlToShow = sequence[i + 1];
-                    RythmSystem.instance.soundtrackManager.GetCurrentSequence().NextLoopControl(i);;
+                    //RythmSystem.instance.soundtrackManager.GetBaseSequence().NextLoopControl(i);;
                     break;
                 }
             }
@@ -137,9 +147,9 @@ public class ButtonSequenceController : MonoBehaviour
         {
             case ESimonMode.EXAMPLE_SIMON:
                 
-                RythmSystem.instance.soundtrackManager.GetCurrentSequence().SetInitControl();
-                currentControlToShow = currentSequence[0];
-                RythmSystem.instance.SetNewSimonMonde(ESimonMode.SIMONSAYS);
+                //RythmSystem.instance.soundtrackManager.GetBaseSequence().SetInitControl();
+                currentControlToShow = currentSequenceGO[0];
+                //RythmSystem.instance.SetNewSimonMonde(ESimonMode.SIMONSAYS);
 
                 break;
             case ESimonMode.SIMONSAYS:
@@ -147,6 +157,6 @@ public class ButtonSequenceController : MonoBehaviour
         }
     }
    
-    public List<GameObject> GetPlayerSequence() { return currentSequence; }
-    public List<GameObject> GetExampleSequence() { return currentExampleSequence; }
+    public List<GameObject> GetPlayerSequence() { return currentSequenceGO; }
+    public List<GameObject> GetExampleSequence() { return currentExampleSequenceGO; }
 }

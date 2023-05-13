@@ -181,6 +181,11 @@ public class SequenceController : MonoBehaviour
         return false;
     }
 
+    public void Finish()
+    {
+        RythmController.instance.soundtrackManager.ConfigurateFinal();
+    }
+
     public void FollowingRythm()
     {
         RythmController.instance.soundtrackManager.RythmOn();

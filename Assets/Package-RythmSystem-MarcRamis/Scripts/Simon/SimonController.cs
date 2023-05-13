@@ -133,7 +133,7 @@ public class SimonController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Simon completed");
+                        sequenceController.Finish();
                     }
                 }
 

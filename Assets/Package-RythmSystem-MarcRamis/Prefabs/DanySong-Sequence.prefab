@@ -49,7 +49,9 @@ MonoBehaviour:
     currentLoopControl: 0
   - buttonSequence: 01000000020000000300000001000000
     currentLoopControl: 0
-  - buttonSequence: 02000000020000000300000003000000
+  - buttonSequence: 01000000010000000400000003000000
+    currentLoopControl: 0
+  - buttonSequence: 02000000020000000300000003000000040000000400000003000000
     currentLoopControl: 0
   exampleSequenceContainer: {fileID: 0}
   sequenceContainer: {fileID: 0}

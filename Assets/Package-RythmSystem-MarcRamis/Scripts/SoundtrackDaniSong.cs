@@ -138,4 +138,9 @@
         instruments[4].SetAudioVolume(1f);
         instruments[5].SetAudioVolume(1f);
     }
+
+    public override void ConfigurateFinal()
+    {
+        MaxVolume();
+    }
 }

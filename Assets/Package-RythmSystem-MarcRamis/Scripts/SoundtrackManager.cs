@@ -51,6 +51,11 @@ public class SoundtrackManager : MonoBehaviour
         // Next configuration is called every time secuence controller of the simon game changes his current secuence to the next
     }
 
+    public virtual void ConfigurateFinal()
+    {
+        // Called when the secuence in the simon game is finished
+    }
+
     private void ReloadSong()
     {
         foreach (Instrument i in instruments)

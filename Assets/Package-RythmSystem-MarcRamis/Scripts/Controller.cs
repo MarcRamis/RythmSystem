@@ -27,14 +27,14 @@ public class Controller : MonoBehaviour
     private bool attackIsReady = true;
 
     private Combo combo = new Combo();
-
+    
     private void Awake()
     {
         trailRenderer_RythmTime.emitting = false;
         trailRender_FinalCombo.emitting = false;
 
         combo.SetMaxCombo(3);
-        RythmSystem.instance.beat.OnBeat += Rythm;
+        RythmController.instance.beat.OnBeat += Rythm;
     }
 
     // Update is called once per frame

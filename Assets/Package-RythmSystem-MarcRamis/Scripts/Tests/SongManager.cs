@@ -23,7 +23,7 @@ public class SongManager : MonoBehaviour
     float[] notes;
 
     //the index of the next note to be spawned
-    int nextIndex = 0;
+    //int nextIndex = 0;
 
     void Start()
     {

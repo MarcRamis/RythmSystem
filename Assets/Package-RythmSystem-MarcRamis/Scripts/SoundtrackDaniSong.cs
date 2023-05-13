@@ -1,9 +1,16 @@
 ﻿public class SoundtrackDaniSong : SoundtrackManager
 {
-    private void Awake()
+    public override void InitializeSequence()
     {
+        base.InitializeSequence();
+
+        //instruments[1].SetAudioVolume(0);
+        //instruments[2].SetAudioVolume(1);
+        //instruments[3].SetAudioVolume(1);
+        //instruments[4].SetAudioVolume(1);
+        //instruments[5].SetAudioVolume(1);
     }
-    
+
     public override void StartConfiguration()
     {
         NextConfiguration();

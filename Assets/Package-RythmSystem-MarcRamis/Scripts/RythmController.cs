@@ -5,36 +5,25 @@ using UnityEngine;
 
 public enum ESoundtracks { FIRST, SECOND, THIRD, FOURTH, COUNT}
 
-public enum ERythmMode { BASE, SIMON}
-public enum ESimonMode { EXAMPLE_SIMON, SIMONSAYS }
-
-public class RythmSystem : MonoBehaviour
+public class RythmController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] public SoundtrackManager soundtrackManager;
     
     [Header("Settings")]
     [SerializeField] private ESoundtracks soundtrackState = ESoundtracks.FIRST;
-    [SerializeField] private ERythmMode rythmMode = ERythmMode.BASE;
-    
-    [HideInInspector] private AudioSource audioBase;
-    [HideInInspector] public AudioSource audioExtraBase;
-    [HideInInspector] private float[] audioSamples = new float[512]; // Array para almacenar los datos de audio
-    
-    public ESimonMode simonMode = ESimonMode.EXAMPLE_SIMON;
 
-    public static RythmSystem instance;
+    public static RythmController instance;
     public Beat beat;
+    public Beat beat2;
 
     private void Awake()
     {
         if (instance == null)
             instance = this;
 
-        //SetNewState(soundtrackState);
-        //SetNewMode(rythmMode);
-
         beat = new Beat();
+        beat2 = new Beat();
     }
 
     private void Start()
@@ -46,10 +35,10 @@ public class RythmSystem : MonoBehaviour
     {
         soundtrackManager.UpdateSoundtracks();
 
-        //CheckIfMusicFinalized();
         //ManageInputs(); // para testear rápido diferentes canciones
-
+        
         beat.Update(soundtrackManager.GetBaseInstrument().IsIntensityGreater());
+        beat2.Update(soundtrackManager.GetAllInstruments()[2].IsIntensityGreater());
     }
 
     private void ManageInputs()
@@ -64,7 +53,7 @@ public class RythmSystem : MonoBehaviour
             SetNewState(soundtrackState);
         }
     }
-
+    
 
     private void HandleRythmState(ESoundtracks newState)
     {
@@ -92,21 +81,16 @@ public class RythmSystem : MonoBehaviour
                 break;
         }
     }
-
     
+    private void NewBase(int index)
+    {
+        soundtrackManager.SetBaseInstrument(index);
+    }
+
     private void SetNewState(ESoundtracks newState)
     {
         soundtrackState = newState;
         HandleRythmState(soundtrackState);
     }
     
-    public void SetNewMode(ERythmMode newState)
-    {
-        rythmMode = newState;
-    }
-   
-    public void SetNewSimonMonde(ESimonMode eSimonMode)
-    {
-        simonMode = eSimonMode;
-    }
 }

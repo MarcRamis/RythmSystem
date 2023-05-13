@@ -7,29 +7,19 @@ public enum EControlType { NONE, SQUARE, CROSS, TRIANGLE, CIRCLE, UP, DOWN, RIGH
 public struct ControlInput
 {
     public EControlType control;
-    public bool isCompleted;
 }
 
 [System.Serializable]
 public class ButtonsSequence
 {
     public EControlType[] buttonSequence;
-    public bool sequenceCompleted;
     
+    //public delegate void SequenceCompletedEvent();
+    //public event SequenceCompletedEvent OnSequenceCompleted;
+
     public EControlType currentLoopControl;
 
-   public void NextLoopControl()
-   {
-       for (int i = 0; i < buttonSequence.Length - 1; i++)
-       {
-           if (buttonSequence[i + 1] != null)
-           {
-               currentLoopControl = buttonSequence[i + 1];
-               break;
-           }
-       }
-   }
-   
+
    public void NextLoopControl(int index)
    {
        currentLoopControl = buttonSequence[index];

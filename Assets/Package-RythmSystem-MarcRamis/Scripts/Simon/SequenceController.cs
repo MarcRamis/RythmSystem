@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonSequenceController : MonoBehaviour
+public enum ESimonMode { EXAMPLE_SIMON, SIMONSAYS }
+
+public class SequenceController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] protected List<ButtonsSequence> sequences; // all the sequence that will be played in this song
-    [HideInInspector] protected ButtonsSequence currentSequence;
+    [HideInInspector] protected ButtonsSequence currentSequence; // my current sequence working on 
     
-    [SerializeField] private GameObject exampleSequenceContainer;
-    [SerializeField] private GameObject sequenceContainer;
-    [SerializeField] public List<GameObject> currentExampleSequenceGO;
-    [SerializeField] public List<GameObject> currentSequenceGO;
-    [SerializeField] public GameObject currentControlToShow;
+    [SerializeField] private GameObject exampleSequenceContainer; // a container to fill up and where are storeds they player example of the sequence
+    [SerializeField] private GameObject sequenceContainer;  // a container to fill up the player must sync with
+    [HideInInspector] public List<GameObject> currentExampleSequenceGO; 
+    [HideInInspector] public List<GameObject> currentSequenceGO;
+    [HideInInspector] public GameObject currentControlToShow;
     
     [Space]
     [Header("Buttons Image")]
@@ -23,17 +25,23 @@ public class ButtonSequenceController : MonoBehaviour
     [SerializeField] private GameObject triangle;
     [SerializeField] private GameObject circle;
     
-    [SerializeField] private GameObject up;
-    [SerializeField] private GameObject down;
-    [SerializeField] private GameObject right;
-    [SerializeField] private GameObject left;
-
-    public ButtonSequenceController instance;
+    [HideInInspector] private GameObject up;
+    [HideInInspector] private GameObject down;
+    [HideInInspector] private GameObject right;
+    [HideInInspector] private GameObject left;
 
     public void Awake()
     {
-        instance = this;
+        Init();
     }
+
+    public void Init()
+    {
+        currentSequence = sequences[1];
+        EControlType[] newSequence = currentSequence.buttonSequence;
+        CreateSequence(newSequence);
+    }
+
 
     public void CreateSequence(EControlType[] controlType)
     {
@@ -44,6 +52,7 @@ public class ButtonSequenceController : MonoBehaviour
             HandleControlType(control);
         }
         currentControlToShow = currentExampleSequenceGO[0];
+        currentSequence.SetInitControl();
     }
 
     private void HandleControlType(EControlType control)
@@ -108,6 +117,24 @@ public class ButtonSequenceController : MonoBehaviour
         currentExampleSequenceGO.Add(newButtonExampleSequence);
     }
     
+    public void UpdateSequence(ESimonMode eSimonMode)
+    {
+        switch (eSimonMode)
+        {
+            case ESimonMode.EXAMPLE_SIMON:
+
+                ShowOnRythm(currentExampleSequenceGO);
+
+                break;
+                
+            case ESimonMode.SIMONSAYS:
+                
+                ShowOnRythm(currentSequenceGO);
+
+                break;
+        }
+    }
+
     public void ShowOnRythm(List<GameObject> sequence)
     { 
         currentControlToShow.SetActive(true);
@@ -123,13 +150,33 @@ public class ButtonSequenceController : MonoBehaviour
                 if (sequence[i + 1] != null)
                 {
                     currentControlToShow = sequence[i + 1];
-                    //RythmSystem.instance.soundtrackManager.GetBaseSequence().NextLoopControl(i);;
+                    currentSequence.NextLoopControl(i + 1);
                     break;
                 }
+                break;
             }
         }
     }
-    
+
+    public bool NextSequence()
+    {
+        for (int i = 0; i < sequences.Count - 1; i++)
+        {
+            if (sequences[i] == currentSequence)
+            {
+                if (sequences[i + 1] != null)
+                {
+                    currentSequence = sequences[i + 1];
+                    EControlType[] newSequence = currentSequence.buttonSequence;
+                    CreateSequence(newSequence);
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
     public bool CheckIfLoopFinished(List<GameObject> sequence)
     {
         foreach(GameObject sq in sequence)
@@ -141,22 +188,52 @@ public class ButtonSequenceController : MonoBehaviour
         return true;
     }
 
-    public void FinishedMode(ESimonMode simonMode)
+    public bool CheckIfExampleFinished()
     {
-        switch (simonMode)
+        foreach (GameObject sq in currentExampleSequenceGO)
         {
-            case ESimonMode.EXAMPLE_SIMON:
-                
-                //RythmSystem.instance.soundtrackManager.GetBaseSequence().SetInitControl();
-                currentControlToShow = currentSequenceGO[0];
-                //RythmSystem.instance.SetNewSimonMonde(ESimonMode.SIMONSAYS);
-
-                break;
-            case ESimonMode.SIMONSAYS:
-                break;
+            if (sq.activeSelf == false)
+                return false;
         }
+
+        return true;
     }
-   
+
+    public bool CheckIfPlayerFinished()
+    {
+        foreach (GameObject sq in currentSequenceGO)
+        {
+            if (sq.activeSelf == false)
+                return false;
+        }
+
+        return true;
+    }
+
+    
+    public void WrongSync()
+    {
+        foreach (GameObject sq in currentSequenceGO)
+        {
+            sq.SetActive(false);
+        }
+        
+        RestartPlayerSequence();
+    }
+
+    public void NowSimonPlayer()
+    {
+        RestartPlayerSequence();
+    }
+
+    private void RestartPlayerSequence()
+    {
+        currentSequence.SetInitControl();
+        currentControlToShow = currentSequenceGO[0];
+    }
+
     public List<GameObject> GetPlayerSequence() { return currentSequenceGO; }
     public List<GameObject> GetExampleSequence() { return currentExampleSequenceGO; }
+    public ButtonsSequence GetCurrentSequence() { return currentSequence; }
+    public EControlType GetCurrentControl() { return currentSequence.currentLoopControl; }
 }

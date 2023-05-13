@@ -21,4 +21,9 @@ public class Instrument
             intensity = SpectrumOperations.CalculateSpectrumIntensity(this);
         }
     }
+    
+    public void SetAudioVolume(float volume)
+    {
+        instrumentRef.volume = volume;
+    }
 }

@@ -21,7 +21,7 @@ public class SoundtrackManager : MonoBehaviour
         }
     }
 
-    public void UpdateSoundtracks()
+    public virtual void UpdateSoundtracks()
     {
         CheckIfMusicFinalized();
 
@@ -36,7 +36,6 @@ public class SoundtrackManager : MonoBehaviour
         }
     }
 
-
     public virtual void StartConfiguration()
     {
 
@@ -45,20 +44,6 @@ public class SoundtrackManager : MonoBehaviour
     public virtual void NextConfiguration()
     {
         currentIteration++;
-    }
-
-    public void SetInstrumentOn(AudioSource audioSource)
-    {
-        audioSource.volume = maxVolume;
-    }
-    public void SetInstrumentOff(AudioSource audioSource)
-    {
-        audioSource.volume = minVolume;
-    }
-    
-    public void SetAudioVolume(AudioSource audioSource, float volume)
-    {
-        audioSource.volume = volume;
     }
 
     private void ReloadSong()
@@ -94,6 +79,7 @@ public class SoundtrackManager : MonoBehaviour
     public float GetThreshold() { return baseInstrument.threshold; }
     public float GetMultiplierNeeded() { return baseInstrument.multiplierNeeded; }
     public void SetBaseInstrument(Instrument newInstrument) { baseInstrument = newInstrument; }
+    public void SetBaseInstrument(int i) { baseInstrument = instruments[i]; }
     public Instrument GetBaseInstrument() { return baseInstrument; }
     public Instrument[] GetAllInstruments() { return instruments; }
 }

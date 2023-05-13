@@ -130,6 +130,7 @@ public class SequenceController : MonoBehaviour
             case ESimonMode.SIMONSAYS:
                 
                 ShowOnRythm(currentSequenceGO);
+                FollowingRythm();
 
                 break;
         }
@@ -169,12 +170,25 @@ public class SequenceController : MonoBehaviour
                     currentSequence = sequences[i + 1];
                     EControlType[] newSequence = currentSequence.buttonSequence;
                     CreateSequence(newSequence);
+                    
+                    RythmController.instance.soundtrackManager.SumConfiguration();
+
                     return true;
                 }
                 break;
             }
         }
         return false;
+    }
+
+    public void FollowingRythm()
+    {
+        RythmController.instance.soundtrackManager.RythmOn();
+    }
+
+    public void NotFollowingRythm()
+    {
+        RythmController.instance.soundtrackManager.RythmOff();
     }
 
     public bool CheckIfLoopFinished(List<GameObject> sequence)
@@ -230,6 +244,7 @@ public class SequenceController : MonoBehaviour
     {
         currentSequence.SetInitControl();
         currentControlToShow = currentSequenceGO[0];
+        NotFollowingRythm();
     }
 
     public List<GameObject> GetPlayerSequence() { return currentSequenceGO; }

@@ -16,7 +16,7 @@ public class RythmController : MonoBehaviour
     public static RythmController instance;
     public Beat beat;
     public Beat beat2;
-
+    
     private void Awake()
     {
         if (instance == null)

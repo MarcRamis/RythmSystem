@@ -46,17 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequences:
   - buttonSequence: 
-    sequenceCompleted: 0
     currentLoopControl: 0
   - buttonSequence: 01000000020000000300000001000000
-    sequenceCompleted: 0
     currentLoopControl: 0
   - buttonSequence: 02000000020000000300000003000000
-    sequenceCompleted: 0
-    currentLoopControl: 0
-  currentSequence:
-    buttonSequence: 
-    sequenceCompleted: 0
     currentLoopControl: 0
   exampleSequenceContainer: {fileID: 0}
   sequenceContainer: {fileID: 0}
@@ -67,7 +60,3 @@ MonoBehaviour:
   cross: {fileID: 2780437384970694135, guid: 6f266334597094b47b5a0085dbb4dcf1, type: 3}
   triangle: {fileID: 2780437384970694135, guid: 098d8f460d2316648b545a0324b7e6bb, type: 3}
   circle: {fileID: 2780437384970694135, guid: ea0b11e40f71b924b856d041222c52a4, type: 3}
-  up: {fileID: 0}
-  down: {fileID: 0}
-  right: {fileID: 0}
-  left: {fileID: 0}

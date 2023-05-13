@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 // this controls corresponds to the ps4 controller but xbox could be the same
 public enum EControlType { NONE, SQUARE, CROSS, TRIANGLE, CIRCLE, UP, DOWN, RIGHT, LEFT }
@@ -17,16 +18,15 @@ public class ButtonsSequence
     //public delegate void SequenceCompletedEvent();
     //public event SequenceCompletedEvent OnSequenceCompleted;
 
-    public EControlType currentLoopControl;
+    [HideInInspector] public EControlType currentLoopControl;
 
-
-   public void NextLoopControl(int index)
-   {
-       currentLoopControl = buttonSequence[index];
-   }
+    public void NextLoopControl(int index)
+    {
+        currentLoopControl = buttonSequence[index];
+    }
    
-   public void SetInitControl()
-   {
-       currentLoopControl = buttonSequence[0];
-   }
+    public void SetInitControl()
+    {
+        currentLoopControl = buttonSequence[0];
+    }
 }

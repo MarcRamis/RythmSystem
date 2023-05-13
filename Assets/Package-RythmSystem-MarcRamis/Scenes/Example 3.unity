@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sequenceController: {fileID: 1245757057}
-  timeToStartPlayerSimon: 0.2
+  timeToStartPlayerSimon: 1
   timeToStartNextSequence: 0.1
   rythmOpportunityCd: 0.5
   mode: 0
@@ -7019,6 +7019,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 17836002}
     m_Modifications:
+    - target: {fileID: 4739789346453732798, guid: 474b8a1b9021db04ebc83d81bcb77036, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739789346727954276, guid: 474b8a1b9021db04ebc83d81bcb77036, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5904724166273075874, guid: 474b8a1b9021db04ebc83d81bcb77036, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7090,9 +7098,77 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 593992221}
     - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
       propertyPath: exampleSequenceContainer
       value: 
       objectReference: {fileID: 245843779}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[2]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[4]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[5]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[2].buttonSequence.Array.data[6]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[5]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780671537160798852, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
+      propertyPath: sequences.Array.data[3].buttonSequence.Array.data[6]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7780671537160798853, guid: 9cf16706d3996d048950ae73af1b2a21, type: 3}
       propertyPath: m_RootOrder
       value: 2

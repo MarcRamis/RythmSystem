@@ -52,10 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundtrackManager: {fileID: 380862070}
   soundtrackState: 0
-  rythmMode: 0
-  audioExtraBase: {fileID: 0}
-  simonMode: 0
   beat:
+    canRythm: 0
+    cd: 0.5
+  beat2:
     canRythm: 0
     cd: 0.5
 --- !u!114 &380862070
@@ -3999,7 +3999,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1168356535215281314, guid: 7a5b19efe295ea14da97140048f15a5a, type: 3}
       propertyPath: m_Volume
-      value: 0
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1168356535215281314, guid: 7a5b19efe295ea14da97140048f15a5a, type: 3}
       propertyPath: m_audioClip
@@ -4074,7 +4074,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1168356535215281314, guid: 7a5b19efe295ea14da97140048f15a5a, type: 3}
       propertyPath: m_Volume
-      value: 0
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1168356535215281314, guid: 7a5b19efe295ea14da97140048f15a5a, type: 3}
       propertyPath: m_audioClip

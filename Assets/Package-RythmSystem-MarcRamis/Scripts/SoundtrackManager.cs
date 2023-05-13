@@ -19,6 +19,9 @@ public class SoundtrackManager : MonoBehaviour
         {
             i.beating.InitBeating();
         }
+        
+        currentIteration = 0;
+        Configurate();
     }
 
     public virtual void UpdateSoundtracks()
@@ -36,14 +39,16 @@ public class SoundtrackManager : MonoBehaviour
         }
     }
 
-    public virtual void StartConfiguration()
+    public virtual void RythmOn()
     {
-
+    }
+    public virtual void RythmOff()
+    {
     }
 
-    public virtual void NextConfiguration()
+    public virtual void Configurate()
     {
-        currentIteration++;
+        // Next configuration is called every time secuence controller of the simon game changes his current secuence to the next
     }
 
     private void ReloadSong()
@@ -56,6 +61,13 @@ public class SoundtrackManager : MonoBehaviour
                 i.beating.StartBeating();
             }
         }
+    }
+
+    public void SumConfiguration()
+    {
+        // Sum aconfiguration is called every time secuence controller of the simon game changes his current secuence to the next
+        currentIteration++;
+        Configurate();
     }
 
     public void CheckIfMusicFinalized()

@@ -7,13 +7,13 @@ public class Combo
     private int maxCombo = 0; // contador máximo de combo posible
 
     // Método que devuelve el contador de combo actual
-    public float GetComboCounter() { return comboCounter; }
+    public int GetComboCounter() { return comboCounter; }
 
     // Método que establece el contador máximo de combo posible
     public void SetMaxCombo(int _maxCombo) { maxCombo = _maxCombo; }
 
     // Método que suma uno al contador de combo actual
-    public void SumCombo() { comboCounter++; }
+    public void SumCombo() { if (comboCounter < maxCombo) comboCounter++; }
 
     // Método que reinicia el contador de combo actual
     public void ComboFailed() { comboCounter = 0; }

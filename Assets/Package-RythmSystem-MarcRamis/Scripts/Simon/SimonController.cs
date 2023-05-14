@@ -63,9 +63,6 @@ public class SimonController : MonoBehaviour
     {
         // Suscribir el método Rythm al evento OnBeat del objeto beat del RythmController
         RythmController.instance.beat.OnBeat += Rythm;
-
-        // Iniciar el juego Simon
-        PlaySimon();
     }
 
 

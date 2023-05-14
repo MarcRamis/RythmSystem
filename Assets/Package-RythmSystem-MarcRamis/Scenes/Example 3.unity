@@ -6967,6 +6967,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: --- SIMON
       objectReference: {fileID: 0}
+    - target: {fileID: 5990023819432637895, guid: cdd282c962836664da6a0354f55ac373, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990023819572703089, guid: cdd282c962836664da6a0354f55ac373, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5990023819572703119, guid: cdd282c962836664da6a0354f55ac373, type: 3}
       propertyPath: sequenceContainer
       value: 

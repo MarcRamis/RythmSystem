@@ -39,14 +39,17 @@ public class SimonController : MonoBehaviour
 
     private void Awake()
     {
-        RythmController.instance.beat.OnBeat += Rythm;
-
-        PlaySimon();
         rythmPlayerTimer = new MTimer(buttonPressedEndCd);
         rythmPlayerTimer.OnTimerEnd += ButtonPressedTimerEnd;
     }
 
-    
+    private void Start()
+    {
+        RythmController.instance.beat.OnBeat += Rythm;
+        PlaySimon();
+    }
+
+
     private void Update()
     {
         if (simonIsPlaying && mode == ESimonMode.SIMONSAYS)

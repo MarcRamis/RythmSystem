@@ -105,13 +105,14 @@ public class RythmController : MonoBehaviour
         switch(newMode)
         {
             case ERythmMode.SCHEDULED:
-
-                soundtrackManager.ConfigurateScheduled();
+                
+                soundtrackManager.Scheduled();
 
                 break;
 
             case ERythmMode.FREE:
-                
+
+                SimonController.instance.Initialize();
                 soundtrackManager.Configurate();
 
                 break;

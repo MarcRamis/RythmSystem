@@ -31,12 +31,6 @@ public class SequenceController : MonoBehaviour
     [HideInInspector] private GameObject right; // Imagen para el botón derecha
     [HideInInspector] private GameObject left; // Imagen para el botón izquierda
 
-    // Método Awake, se ejecuta al inicio del script
-    public void Awake()
-    {
-        Init();
-    }
-
     // Método Init para inicializar el juego
     public void Init()
     {

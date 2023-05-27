@@ -5,7 +5,6 @@
         base.InitializeSoundtracks();
     }
 
-
     /// First sequence
     // rytming with clap 
     // play hithat and bajo 
@@ -18,7 +17,6 @@
     // rytming with bajo
     // play hi-hat and kick
 
-
     public override void RythmOn()
     {
         base.RythmOn();
@@ -30,6 +28,9 @@
                 duplicatedInstruments[2].SetAudioVolume(0.6f);
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
 
+                instruments[2].isBeating = true;
+                instruments[3].isBeating = true;
+
                 break;
 
             case 1:
@@ -37,12 +38,18 @@
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
                 duplicatedInstruments[4].SetAudioVolume(0.6f);
 
+                instruments[3].isBeating = true;
+                instruments[4].isBeating = true;
+
                 break;
 
             case 2:
 
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
                 duplicatedInstruments[4].SetAudioVolume(0.6f);
+
+                instruments[3].isBeating = true;
+                instruments[4].isBeating = true;
 
                 break;
 
@@ -61,12 +68,18 @@
                 duplicatedInstruments[2].SetAudioVolume(0f);
                 duplicatedInstruments[3].SetAudioVolume(0f);
 
+                instruments[2].isBeating = false;
+                instruments[3].isBeating = false;
+
                 break;
 
             case 1:
 
                 duplicatedInstruments[3].SetAudioVolume(0f);
                 duplicatedInstruments[4].SetAudioVolume(0f);
+
+                instruments[3].isBeating = false;
+                instruments[4].isBeating = false;
 
                 break;
 
@@ -75,6 +88,9 @@
                 duplicatedInstruments[3].SetAudioVolume(0f);
                 duplicatedInstruments[4].SetAudioVolume(0f);
 
+                instruments[3].isBeating = false;
+                instruments[4].isBeating = false;
+
                 break;
 
             default:
@@ -82,14 +98,10 @@
         }
     }
 
-    public override void ConfigurateScheduled()
-    {
-        base.ConfigurateScheduled();
-    }
-
     public override void Configurate()
     {
         NoVolume();
+        NoBeating();
 
         switch (currentIteration)
         {
@@ -99,6 +111,8 @@
                 duplicatedInstruments[2].SetAudioVolume(0.6f);
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
 
+                instruments[1].isBeating = true;
+
                 break;
 
             case 1:
@@ -107,7 +121,7 @@
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
                 duplicatedInstruments[4].SetAudioVolume(0.6f);
 
-                baseInstrument = instruments[5];
+                instruments[5].isBeating = true;
 
                 break;
 
@@ -118,30 +132,13 @@
                 duplicatedInstruments[3].SetAudioVolume(0.6f);
                 duplicatedInstruments[4].SetAudioVolume(0.6f);
 
-                baseInstrument = instruments[2];
+                instruments[2].isBeating = true;
 
                 break;
 
             default:
                 break;
         }
-    }
-
-    private void NoVolume()
-    {
-        duplicatedInstruments[1].SetAudioVolume(0f);
-        duplicatedInstruments[2].SetAudioVolume(0f);
-        duplicatedInstruments[3].SetAudioVolume(0f);
-        duplicatedInstruments[4].SetAudioVolume(0f);
-        duplicatedInstruments[5].SetAudioVolume(0f);
-    }
-    private void MaxVolume()
-    {
-        duplicatedInstruments[1].SetAudioVolume(1f);
-        duplicatedInstruments[2].SetAudioVolume(1f);
-        duplicatedInstruments[3].SetAudioVolume(1f);
-        duplicatedInstruments[4].SetAudioVolume(1f);
-        duplicatedInstruments[5].SetAudioVolume(1f);
     }
 
     public override void ConfigurateFinal()

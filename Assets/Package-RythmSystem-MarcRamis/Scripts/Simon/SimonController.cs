@@ -12,6 +12,8 @@ public class SimonController : MonoBehaviour
     protected bool rythmMoment; // Variable que indica si se está en un momento de ritmo
     protected bool simonIsPlaying = false; // Indica si el minijuego se está ejecutando
 
+    public static SimonController instance;
+
     [Header("Settings")]
     [SerializeField] protected float timeToStartPlayerSimon = 5f; // Tiempo que tarda en empezar la secuencia del jugador después de que se haya mostrado el ejemplo
     [SerializeField] protected float timeToStartNextSequence = 5f; // Tiempo que tarda en empezar una nueva secuencia después de que se haya completado la actual
@@ -54,6 +56,9 @@ public class SimonController : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+
         // Crear y configurar un temporizador para el botón presionado
         rythmPlayerTimer = new MTimer(buttonPressedEndCd);
         rythmPlayerTimer.OnTimerEnd += ButtonPressedTimerEnd;
@@ -85,7 +90,6 @@ public class SimonController : MonoBehaviour
                     // Verificar si el jugador hizo una secuencia correcta con ritmo
                     Check();
                 }
-
             }
             else
             {
@@ -258,6 +262,7 @@ public class SimonController : MonoBehaviour
     // Inicializa el juego
     public void Initialize()
     {
+        sequenceController.Init();
         OnStart?.Invoke();
         PlaySimon();
     }

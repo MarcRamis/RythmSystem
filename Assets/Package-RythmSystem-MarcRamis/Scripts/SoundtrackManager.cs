@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SoundtrackManager : MonoBehaviour
 {
-    [SerializeField] protected Instrument[] instruments;
+    [SerializeField] protected Instrument[] instruments; // this are the instruments that will calculate the spectrum
+    [SerializeField] protected List<Instrument> duplicatedInstruments; // This are the instruments that will be heared by the player
     [SerializeField] protected Instrument baseInstrument;
-
+    
     [HideInInspector] protected float maxVolume = 0.5f;
     [HideInInspector] protected float minVolume = 0f;
     [HideInInspector] public int currentIteration = 0;
@@ -15,13 +16,47 @@ public class SoundtrackManager : MonoBehaviour
     {
         baseInstrument = instruments[1];
         
-        foreach (Instrument i in instruments)
+        foreach(Instrument i in instruments)
         {
-            i.beating.InitBeating();
+            if (i.instrumentRef != null)
+            {
+                i.instrumentRef.volume = 0.001f;
+            }
         }
-        
+
+        ReloadSong();
+
         currentIteration = 0;
         Configurate();
+    }
+
+    public virtual void StopSoundtracks()
+    {
+        foreach (Instrument i in instruments)
+        {
+            if (i.instrumentRef != null)
+            {
+                i.instrumentRef.Stop();
+            }
+        }
+        foreach (Instrument i in duplicatedInstruments)
+        {
+            if (i.instrumentRef != null)
+            {
+                i.instrumentRef.Stop();
+            }
+        }
+    }
+
+    public virtual void StartSongLater()
+    {
+        foreach (Instrument i in duplicatedInstruments)
+        {
+            if (i.instrumentRef != null)
+            {
+                i.instrumentRef.Play();
+            }
+        }
     }
 
     public virtual void UpdateSoundtracks()
@@ -30,12 +65,10 @@ public class SoundtrackManager : MonoBehaviour
 
         foreach (Instrument i in instruments)
         {
-            i.UpdateSpectrumIntensity();
-        }
-
-        foreach (Instrument i in instruments)
-        {
-            i.beating.UpdateBeating();
+            if (i.instrumentRef != null)
+            {
+                i.UpdateSpectrumIntensity();
+            }
         }
     }
 
@@ -55,7 +88,7 @@ public class SoundtrackManager : MonoBehaviour
     {
         // Called when the secuence in the simon game is finished
     }
-
+    
     protected virtual void ReloadSong()
     {
         foreach (Instrument i in instruments)
@@ -63,9 +96,9 @@ public class SoundtrackManager : MonoBehaviour
             if (i.instrumentRef != null)
             {
                 i.instrumentRef.Play();
-                i.beating.StartBeating();
             }
         }
+        Invoke(nameof(StartSongLater), 0.005f);
     }
 
     public void SumConfiguration()

@@ -27,22 +27,22 @@
         {
             case 0:
                 
-                instruments[2].SetAudioVolume(0.6f);
-                instruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[2].SetAudioVolume(0.6f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
 
                 break;
 
             case 1:
 
-                instruments[3].SetAudioVolume(0.6f);
-                instruments[4].SetAudioVolume(0.6f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[4].SetAudioVolume(0.6f);
 
                 break;
 
             case 2:
 
-                instruments[3].SetAudioVolume(0.6f);
-                instruments[4].SetAudioVolume(0.6f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[4].SetAudioVolume(0.6f);
 
                 break;
 
@@ -57,23 +57,23 @@
         switch (currentIteration)
         {
             case 0:
-                
-                instruments[2].SetAudioVolume(0f);
-                instruments[3].SetAudioVolume(0f);
+
+                duplicatedInstruments[2].SetAudioVolume(0f);
+                duplicatedInstruments[3].SetAudioVolume(0f);
 
                 break;
 
             case 1:
 
-                instruments[3].SetAudioVolume(0f);
-                instruments[4].SetAudioVolume(0f);
+                duplicatedInstruments[3].SetAudioVolume(0f);
+                duplicatedInstruments[4].SetAudioVolume(0f);
 
                 break;
 
             case 2:
 
-                instruments[3].SetAudioVolume(0f);
-                instruments[4].SetAudioVolume(0f);
+                duplicatedInstruments[3].SetAudioVolume(0f);
+                duplicatedInstruments[4].SetAudioVolume(0f);
 
                 break;
 
@@ -90,17 +90,17 @@
         {
             case 0:
 
-                instruments[1].SetAudioVolume(1f);
-                instruments[2].SetAudioVolume(0.6f);
-                instruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[1].SetAudioVolume(1f);
+                duplicatedInstruments[2].SetAudioVolume(0.6f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
 
                 break;
 
             case 1:
 
-                instruments[5].SetAudioVolume(1f);
-                instruments[3].SetAudioVolume(0.6f);
-                instruments[4].SetAudioVolume(0.6f);
+                duplicatedInstruments[5].SetAudioVolume(1f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[4].SetAudioVolume(0.6f);
 
                 baseInstrument = instruments[5];
 
@@ -109,9 +109,9 @@
 
             case 2:
 
-                instruments[2].SetAudioVolume(1f);
-                instruments[3].SetAudioVolume(0.6f);
-                instruments[4].SetAudioVolume(0.6f);
+                duplicatedInstruments[2].SetAudioVolume(1f);
+                duplicatedInstruments[3].SetAudioVolume(0.6f);
+                duplicatedInstruments[4].SetAudioVolume(0.6f);
 
                 baseInstrument = instruments[2];
 
@@ -124,19 +124,19 @@
 
     private void NoVolume()
     {
-        instruments[1].SetAudioVolume(0f);
-        instruments[2].SetAudioVolume(0f);
-        instruments[3].SetAudioVolume(0f);
-        instruments[4].SetAudioVolume(0f);
-        instruments[5].SetAudioVolume(0f);
+        duplicatedInstruments[1].SetAudioVolume(0f);
+        duplicatedInstruments[2].SetAudioVolume(0f);
+        duplicatedInstruments[3].SetAudioVolume(0f);
+        duplicatedInstruments[4].SetAudioVolume(0f);
+        duplicatedInstruments[5].SetAudioVolume(0f);
     }
     private void MaxVolume()
     {
-        instruments[1].SetAudioVolume(1f);
-        instruments[2].SetAudioVolume(1f);
-        instruments[3].SetAudioVolume(1f);
-        instruments[4].SetAudioVolume(1f);
-        instruments[5].SetAudioVolume(1f);
+        duplicatedInstruments[1].SetAudioVolume(1f);
+        duplicatedInstruments[2].SetAudioVolume(1f);
+        duplicatedInstruments[3].SetAudioVolume(1f);
+        duplicatedInstruments[4].SetAudioVolume(1f);
+        duplicatedInstruments[5].SetAudioVolume(1f);
     }
 
     public override void ConfigurateFinal()

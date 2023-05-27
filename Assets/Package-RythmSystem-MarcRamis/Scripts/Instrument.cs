@@ -10,8 +10,6 @@ public class Instrument
     public float multiplierNeeded = 100000;
     public float intensity = 0;
 
-    public Beating beating;
-
     public bool IsIntensityGreater() { return (intensity * instrumentRef.volume) > (threshold * instrumentRef.volume); }
 
     public void UpdateSpectrumIntensity()

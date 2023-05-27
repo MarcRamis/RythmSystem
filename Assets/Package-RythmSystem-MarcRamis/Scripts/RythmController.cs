@@ -3,19 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ESoundtracks { FIRST, SECOND, THIRD, FOURTH, COUNT}
+public enum ESoundtracks { FIRST, SECOND, COUNT}
+public enum ERythmMode { SCHEDULED, FREE }
 
 public class RythmController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] public SoundtrackManager soundtrackManager;
+    [SerializeField] public List<SoundtrackManager> soundtracks;
     
     [Header("Settings")]
     [SerializeField] private ESoundtracks soundtrackState = ESoundtracks.FIRST;
 
+    public ERythmMode rythmMode;
     public static RythmController instance;
     public Beat beat;
-    public Beat beat2;
     
     private void Awake()
     {
@@ -23,7 +25,6 @@ public class RythmController : MonoBehaviour
             instance = this;
 
         beat = new Beat();
-        beat2 = new Beat();
     }
 
     private void Start()
@@ -35,14 +36,14 @@ public class RythmController : MonoBehaviour
     {
         soundtrackManager.UpdateSoundtracks();
 
-        //ManageInputs(); // para testear rápido diferentes canciones
+        ManageInputs();
         
         beat.Update(soundtrackManager.GetBaseInstrument().IsIntensityGreater());
-        //beat2.Update(soundtrackManager.GetAllInstruments()[2].IsIntensityGreater());
     }
 
     private void ManageInputs()
     {
+        // Cambiar la canción
         if (Input.GetKeyDown(KeyCode.P))
         {
             soundtrackState += 1;
@@ -52,45 +53,76 @@ public class RythmController : MonoBehaviour
             }
             SetNewState(soundtrackState);
         }
+        
+        // Cambiar el modo
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (rythmMode == ERythmMode.SCHEDULED)
+            {
+                rythmMode = ERythmMode.FREE;
+            }
+            else
+            {
+                rythmMode = ERythmMode.SCHEDULED;
+            }
+            SetNewMode(rythmMode);
+        }
     }
     
 
-    private void HandleRythmState(ESoundtracks newState)
+    private void HandleSoundtrack(ESoundtracks newState)
     {
+        soundtrackManager.StopSoundtracks();
         switch (newState)
         {
             case ESoundtracks.FIRST:
 
+                soundtrackManager = soundtracks[0];
 
                 break;
 
             case ESoundtracks.SECOND:
 
-                break;
-
-            case ESoundtracks.THIRD:
-
-                
-                break;
-                
-            case ESoundtracks.FOURTH:
-
+                soundtrackManager = soundtracks[1];
 
                 break;
+
             case ESoundtracks.COUNT:
+                break;
+        }
+
+        soundtrackManager.InitializeSoundtracks();
+    }
+
+
+    private void HandleRythmMode(ERythmMode newMode)
+    {
+        switch(newMode)
+        {
+            case ERythmMode.SCHEDULED:
+
+
+
+                break;
+
+            case ERythmMode.FREE:
+
+
+
                 break;
         }
     }
     
-    private void NewBase(int index)
+    private void SetNewMode(ERythmMode newMode)
     {
-        soundtrackManager.SetBaseInstrument(index);
+        rythmMode = newMode;
+        HandleRythmMode(rythmMode);
     }
 
     private void SetNewState(ESoundtracks newState)
     {
         soundtrackState = newState;
-        HandleRythmState(soundtrackState);
+        HandleSoundtrack(soundtrackState);
     }
     
 }

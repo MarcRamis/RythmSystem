@@ -27,7 +27,7 @@ public class SoundtrackManager : MonoBehaviour
         ReloadSong();
 
         currentIteration = 0;
-        Configurate();
+        //Configurate();
     }
 
     public virtual void StopSoundtracks()
@@ -77,6 +77,15 @@ public class SoundtrackManager : MonoBehaviour
     }
     public virtual void RythmOff()
     {
+    }
+
+    public virtual void ConfigurateScheduled()
+    {
+        // Next configuration is called every time secuence controller of the simon game changes his current secuence to the next
+        foreach(Instrument i in duplicatedInstruments)
+        {
+            i.SetAudioVolume(1f);
+        }
     }
 
     public virtual void Configurate()

@@ -3227,6 +3227,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   - instrumentRef: {fileID: 0}
     audioSamples:
     - 0
@@ -3744,6 +3745,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   - instrumentRef: {fileID: 0}
     audioSamples:
     - 0
@@ -4261,6 +4263,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   - instrumentRef: {fileID: 0}
     audioSamples:
     - 0
@@ -4778,6 +4781,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   - instrumentRef: {fileID: 0}
     audioSamples:
     - 0
@@ -5295,6 +5299,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   - instrumentRef: {fileID: 0}
     audioSamples:
     - 0
@@ -5812,6 +5817,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   duplicatedInstruments: []
   baseInstrument:
     instrumentRef: {fileID: 0}
@@ -6331,6 +6337,7 @@ MonoBehaviour:
     threshold: 10
     multiplierNeeded: 100000
     intensity: 0
+    isBeating: 0
   currentIteration: 0
 --- !u!1 &1403946850 stripped
 GameObject:
@@ -7268,7 +7275,15 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[1].isBeating
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[1].threshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[2].isBeating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
@@ -7276,7 +7291,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[3].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[3].threshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[4].isBeating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
@@ -7284,11 +7307,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[5].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[5].threshold
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[6].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[6].threshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[7].isBeating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 63718062, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
@@ -9368,7 +9403,15 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[1].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[1].threshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[2].isBeating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
@@ -9376,11 +9419,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[3].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[3].threshold
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[4].isBeating
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: instruments.Array.data[4].threshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: instruments.Array.data[5].isBeating
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 991079625693424890, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
@@ -9604,9 +9659,13 @@ PrefabInstance:
       value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6836978008749671642, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
+      propertyPath: beats.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836978008749671642, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: soundtrackManager
       value: 
-      objectReference: {fileID: 6836978007095623150}
+      objectReference: {fileID: 888120583}
     - target: {fileID: 6836978008749671642, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: soundtracks.Array.size
       value: 2

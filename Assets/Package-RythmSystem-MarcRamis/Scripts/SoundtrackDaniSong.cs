@@ -81,7 +81,12 @@
                 break;
         }
     }
-    
+
+    public override void ConfigurateScheduled()
+    {
+        base.ConfigurateScheduled();
+    }
+
     public override void Configurate()
     {
         NoVolume();

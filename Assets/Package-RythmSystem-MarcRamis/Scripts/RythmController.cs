@@ -17,14 +17,16 @@ public class RythmController : MonoBehaviour
 
     public ERythmMode rythmMode;
     public static RythmController instance;
-    public Beat beat;
     
+    public Beat beat;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
-
+        
         beat = new Beat();
+        HandleRythmMode(rythmMode);
     }
 
     private void Start()
@@ -37,8 +39,9 @@ public class RythmController : MonoBehaviour
         soundtrackManager.UpdateSoundtracks();
 
         ManageInputs();
-        
-        beat.Update(soundtrackManager.GetBaseInstrument().IsIntensityGreater());
+
+        beat.Update(soundtrackManager.GetAllInstruments());
+
     }
 
     private void ManageInputs()
@@ -97,17 +100,19 @@ public class RythmController : MonoBehaviour
 
     private void HandleRythmMode(ERythmMode newMode)
     {
+        SetNewState(soundtrackState);
+
         switch(newMode)
         {
             case ERythmMode.SCHEDULED:
 
-
+                soundtrackManager.ConfigurateScheduled();
 
                 break;
 
             case ERythmMode.FREE:
-
-
+                
+                soundtrackManager.Configurate();
 
                 break;
         }

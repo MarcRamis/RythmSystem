@@ -4856,7 +4856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5281377241620888844, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: buttonPressedEndCd
-      value: 1.2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5281377241620888844, guid: a891c426cd62dd8418e3fd854cfbd8a2, type: 3}
       propertyPath: sequenceController

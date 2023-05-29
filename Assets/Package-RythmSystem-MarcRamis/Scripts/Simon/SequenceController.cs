@@ -12,8 +12,6 @@ public class SequenceController : MonoBehaviour
     [SerializeField] protected List<ButtonsSequence> sequences; // Lista de secuencias que se reproducirán en esta canción
     [SerializeField] protected ButtonsSequence currentSequence; // La secuencia actual en la que se está trabajando
 
-    private int currentSequenceIdx;
-
     // Método Init para inicializar el juego
     public void Init()
     {
@@ -60,20 +58,6 @@ public class SequenceController : MonoBehaviour
     {
         RythmController.instance.soundtrackManager.RythmOnFreed();
         NotFollowingSequence();
-    }
-
-    public bool CheckIfLoopFinished(List<GameObject> sequence)
-    {
-        // Iteramos sobre la lista de botones en la secuencia
-        foreach (GameObject sq in sequence)
-        {
-            // Si encontramos un botón que no esté activo, devolvemos false
-            if (sq.activeSelf == false)
-                return false;
-        }
-
-        // Si todos los botones están activos, devolvemos true
-        return true;
     }
 
     public bool CheckIfPlayerFinished()

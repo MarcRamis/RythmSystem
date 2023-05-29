@@ -27,31 +27,18 @@ public class SimonController : MonoBehaviour
     private Combo freedCombo;
 
     // Eventos para cuando se presiona el botón correcto, se presiona el botón incorrecto, 
-    // se completa la secuencia de ejemplo, se completa la secuencia del jugador, 
     // se presiona tarde un botón y no se presiona en un momento de ritmo
     public delegate void OnCorrectButtonEvent();
-    public OnCorrectButtonEvent OnCorrectButton;
+    public OnCorrectButtonEvent OnCorrectSequence;
 
     public delegate void OnWrongButtonEvent();
-    public OnWrongButtonEvent OnWrongButton;
-
-    public delegate void OnExampleCompletedSequenceEvent();
-    public OnExampleCompletedSequenceEvent OnExampleCompletedSequence;
-
-    public delegate void OnPlayerCompletedSequenceEvent();
-    public OnPlayerCompletedSequenceEvent OnPlayerCompletedSequence;
+    public OnWrongButtonEvent OnCorrectButton;
 
     public delegate void OnTooLateButtonEvent();
     public OnTooLateButtonEvent OnTooLateButton;
 
     public delegate void OnNoRhythmPressedButtonEvent();
     public OnNoRhythmPressedButtonEvent OnNoRhythmPressedButton;
-
-    public delegate void OnStartEvent();
-    public OnStartEvent OnStart;
-
-    public delegate void OnFinishedEvent();
-    public OnFinishedEvent OnFinished;
 
     private void Awake()
     {
@@ -71,7 +58,7 @@ public class SimonController : MonoBehaviour
         // Suscribir el método Rythm al evento OnBeat del objeto beat del RythmController
         RythmController.instance.beat.OnBeat += Rythm;
     }
-    
+
     private void Update()
     {
         // Si Simon está jugando en el modo Simon Dice
@@ -150,6 +137,7 @@ public class SimonController : MonoBehaviour
                     if (sequenceController.CheckIfPlayerFinished())
                     {
                         SumCombo(5);
+                        OnCorrectSequence?.Invoke();
                     }
                 }
 
@@ -157,9 +145,6 @@ public class SimonController : MonoBehaviour
                 {
                     correctButtonPressed = false;
 
-                    // Invoca el evento OnWrongButton si el botón es incorrecto
-                    OnWrongButton?.Invoke();
-                    
                     SumCombo(1);
                     sequenceController.FollowingRandomRythm();
                 }
@@ -227,18 +212,10 @@ public class SimonController : MonoBehaviour
         return false;
     }
 
-    // Inicia la reproducción de la siguiente secuencia
-    private void StartNextSequence()
-    {
-        OnPlayerCompletedSequence?.Invoke();
-        PlaySimon();
-    }
-
     // Inicializa el juego
     public void Initialize()
     {
         sequenceController.Init();
-        OnStart?.Invoke();
         PlaySimon();
     }
 

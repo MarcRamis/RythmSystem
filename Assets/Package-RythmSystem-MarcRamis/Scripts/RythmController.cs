@@ -19,6 +19,12 @@ public class RythmController : MonoBehaviour
     public static RythmController instance;
     
     public Beat beat;
+    
+    public delegate void OnScheduledModeEvent();
+    public OnScheduledModeEvent OnScheduledMode;
+
+    public delegate void OnFreeModeEvent();
+    public OnFreeModeEvent OnFreeMode;
 
     private void Awake()
     {
@@ -111,6 +117,8 @@ public class RythmController : MonoBehaviour
                 
                 SimonController.instance.StopSimon();
                 soundtrackManager.ScheduledInitialize();
+               
+                OnScheduledMode?.Invoke();
 
                 break;
 
@@ -118,6 +126,8 @@ public class RythmController : MonoBehaviour
                 
                 SimonController.instance.Initialize();
                 soundtrackManager.FreedInitialize();
+               
+                OnFreeMode?.Invoke();
 
                 break;
         }

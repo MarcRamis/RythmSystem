@@ -149,7 +149,7 @@ public class SimonController : MonoBehaviour
                     // Verifica si el jugador completó la secuencia actual
                     if (sequenceController.CheckIfPlayerFinished())
                     {
-                        SumCombo(2);
+                        SumCombo(5);
                     }
                 }
 

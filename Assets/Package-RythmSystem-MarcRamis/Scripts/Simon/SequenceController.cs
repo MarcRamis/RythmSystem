@@ -12,6 +12,8 @@ public class SequenceController : MonoBehaviour
     [SerializeField] protected List<ButtonsSequence> sequences; // Lista de secuencias que se reproducirán en esta canción
     [SerializeField] protected ButtonsSequence currentSequence; // La secuencia actual en la que se está trabajando
 
+    private int currentSequenceIdx;
+
     // Método Init para inicializar el juego
     public void Init()
     {
@@ -42,32 +44,6 @@ public class SequenceController : MonoBehaviour
         currentSequence.SumLoopControl();
     }
 
-    public bool NextSequence()
-    {
-        // Iteramos sobre la lista de secuencias
-        for (int i = 0; i < sequences.Count - 1; i++)
-        {
-            // Comprobamos si la secuencia actual es la que estamos mostrando
-            if (sequences[i] == currentSequence)
-            {
-                // Si la siguiente secuencia no es nula,
-                // actualizamos la secuencia actual y creamos una nueva secuencia
-                if (sequences[i + 1] != null)
-                {
-                    currentSequence = sequences[i + 1];
-                    
-                    // Sumamos la configuración al soundtrackManager
-                    RythmController.instance.soundtrackManager.SelectConfiguration(i);
-
-                    return true;
-                }
-                // Si la siguiente secuencia es nula, salimos del loop
-                break;
-            }
-        }
-        return false;
-    }
-
     public void Finish()
     {
         // Configuramos la fase final del soundtrackManager
@@ -82,7 +58,6 @@ public class SequenceController : MonoBehaviour
     
     public void FollowingRandomRythm()
     {
-        RythmController.instance.soundtrackManager.RythmOff();
         RythmController.instance.soundtrackManager.RythmOnFreed();
         NotFollowingSequence();
     }
@@ -138,15 +113,16 @@ public class SequenceController : MonoBehaviour
        
         else
         {
-            foreach (ButtonsSequence bs in sequences)
+            for (int i = 0; i < sequences.Count; i++)
             {
-                if (bs != sequences[0])
+                if (sequences[i] != sequences[0])
                 {
                     // Quiero comprobar la primera vez que esté siguiendo un ritmo
                     // Si no sigue el ritmo, hay que devolver false
-                    if (bs.currentLoopControl == eControlType)
+                    if (sequences[i].currentLoopControl == eControlType)
                     {
-                        currentSequence = bs;
+                        RythmController.instance.soundtrackManager.SelectConfiguration(i - 1);
+                        currentSequence = sequences[i];
                         return true;
                     }
                 }

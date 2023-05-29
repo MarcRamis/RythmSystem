@@ -19,7 +19,7 @@
     public override void RythmOn()
     {
         base.RythmOn();
-       
+
         switch (currentIteration)
         {
             case 0:

@@ -1234,22 +1234,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequences:
   - buttonSequence: 
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
-  - buttonSequence: 030000000400000003000000
+  - buttonSequence: 040000000400000002000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
   - buttonSequence: 010000000100000004000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
   - buttonSequence: 020000000200000003000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
-  exampleSequenceContainer: {fileID: 0}
-  sequenceContainer: {fileID: 0}
-  currentExampleSequenceGO: []
-  currentSequenceGO: []
-  currentControlToShow: {fileID: 0}
-  square: {fileID: 2780437384970694135, guid: c03b7c142932821458e57913b1495289, type: 3}
-  cross: {fileID: 2780437384970694135, guid: 6f266334597094b47b5a0085dbb4dcf1, type: 3}
-  triangle: {fileID: 2780437384970694135, guid: 098d8f460d2316648b545a0324b7e6bb, type: 3}
-  circle: {fileID: 2780437384970694135, guid: ea0b11e40f71b924b856d041222c52a4, type: 3}
+  currentSequence:
+    buttonSequence: 
+    isCompleted: 0
+    sequenceCounter: 0
+    currentLoopControl: 0
 --- !u!1 &1288186236
 GameObject:
   m_ObjectHideFlags: 0
@@ -2099,12 +2103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77bea376a04052418bd857f60b3638f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequenceController: {fileID: 6972149516009400019}
-  timeToStartPlayerSimon: 1
-  timeToStartNextSequence: 0.1
+  sequenceController: {fileID: 1208223287}
+  sequenceControllers:
+  - {fileID: 6972149516009400019}
+  - {fileID: 1208223287}
   rythmOpportunityCd: 0.5
-  mode: 0
-  buttonPressedEndCd: 2
+  buttonPressedEndCd: 2.5
 --- !u!1 &2498756357510774715
 GameObject:
   m_ObjectHideFlags: 0
@@ -5462,6 +5466,7 @@ MonoBehaviour:
     multiplierNeeded: 1000000
     intensity: 0
     isBeating: 0
+  freedInstrumentIndx: 1
   currentIteration: 0
 --- !u!1 &5530254164954095997
 GameObject:
@@ -5637,22 +5642,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequences:
   - buttonSequence: 
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
   - buttonSequence: 010000000100000001000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
   - buttonSequence: 020000000200000002000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
   - buttonSequence: 030000000300000003000000
+    isCompleted: 0
+    sequenceCounter: 0
     currentLoopControl: 0
-  exampleSequenceContainer: {fileID: 0}
-  sequenceContainer: {fileID: 0}
-  currentExampleSequenceGO: []
-  currentSequenceGO: []
-  currentControlToShow: {fileID: 0}
-  square: {fileID: 2780437384970694135, guid: c03b7c142932821458e57913b1495289, type: 3}
-  cross: {fileID: 2780437384970694135, guid: 6f266334597094b47b5a0085dbb4dcf1, type: 3}
-  triangle: {fileID: 2780437384970694135, guid: 098d8f460d2316648b545a0324b7e6bb, type: 3}
-  circle: {fileID: 2780437384970694135, guid: ea0b11e40f71b924b856d041222c52a4, type: 3}
+  currentSequence:
+    buttonSequence: 
+    isCompleted: 0
+    sequenceCounter: 0
+    currentLoopControl: 0
 --- !u!1 &6236451024119094558
 GameObject:
   m_ObjectHideFlags: 0
@@ -5986,7 +5995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bceff396fae81a46a6af767fd4e14b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundtrackManager: {fileID: 991079625693424890}
+  soundtrackManager: {fileID: 63718062}
   soundtracks:
   - {fileID: 991079625693424890}
   - {fileID: 63718062}
@@ -9168,7 +9177,7 @@ MonoBehaviour:
     multiplierNeeded: 0
     intensity: 0
     isBeating: 0
-  - instrumentRef: {fileID: 0}
+  - instrumentRef: {fileID: 840564948}
     audioSamples: []
     threshold: 100
     multiplierNeeded: 100000
@@ -9204,6 +9213,7 @@ MonoBehaviour:
     multiplierNeeded: 100000
     intensity: 0
     isBeating: 0
+  freedInstrumentIndx: 2
   currentIteration: 0
 --- !u!1 &8144982879208407025
 GameObject:

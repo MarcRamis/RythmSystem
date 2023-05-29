@@ -26,11 +26,12 @@ public class RythmController : MonoBehaviour
             instance = this;
         
         beat = new Beat();
-        HandleRythmMode(rythmMode);
+        
     }
-
+    
     private void Start()
     {
+        HandleRythmMode(rythmMode);
         soundtrackManager.InitializeSoundtracks();
     }
 
@@ -57,7 +58,7 @@ public class RythmController : MonoBehaviour
             SetNewState(soundtrackState);
         }
         
-        // Cambiar el modo
+        // Cambiar el modo de juego
         if (Input.GetKeyDown(KeyCode.O))
         {
             if (rythmMode == ERythmMode.SCHEDULED)
@@ -81,12 +82,14 @@ public class RythmController : MonoBehaviour
             case ESoundtracks.FIRST:
 
                 soundtrackManager = soundtracks[0];
+                SimonController.instance.SetSequenceController(0); 
 
                 break;
-
+                
             case ESoundtracks.SECOND:
-
+                
                 soundtrackManager = soundtracks[1];
+                SimonController.instance.SetSequenceController(1);
 
                 break;
 
@@ -106,14 +109,15 @@ public class RythmController : MonoBehaviour
         {
             case ERythmMode.SCHEDULED:
                 
-                soundtrackManager.Scheduled();
+                SimonController.instance.StopSimon();
+                soundtrackManager.ScheduledInitialize();
 
                 break;
 
             case ERythmMode.FREE:
-
+                
                 SimonController.instance.Initialize();
-                soundtrackManager.Configurate();
+                soundtrackManager.FreedInitialize();
 
                 break;
         }

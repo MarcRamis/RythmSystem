@@ -6,6 +6,7 @@ public class SoundtrackManager : MonoBehaviour
 {
     [SerializeField] protected Instrument[] instruments; // this are the instruments that will calculate the spectrum
     [SerializeField] protected List<Instrument> duplicatedInstruments; // This are the instruments that will be heared by the player
+    [SerializeField] protected int freedInstrumentIndx; // This is the index of the instrument that is always played on the free mode
 
     [HideInInspector] protected float maxVolume = 0.5f;
     [HideInInspector] protected float minVolume = 0f;
@@ -24,7 +25,6 @@ public class SoundtrackManager : MonoBehaviour
         ReloadSong();
 
         currentIteration = 0;
-        //Configurate();
     }
 
     public virtual void StopSoundtracks()
@@ -76,24 +76,31 @@ public class SoundtrackManager : MonoBehaviour
     {
     }
     
-    public virtual void Scheduled()
+    public virtual void ScheduledInitialize()
     {
-        // Next configuration is called every time secuence controller of the simon game changes his current secuence to the next
-        foreach(Instrument i in duplicatedInstruments)
-        {
-            i.SetAudioVolume(1f);
-            i.isBeating = true;
-        }
-    }
-
-    public virtual void Configurate()
-    {
-        // Next configuration is called every time secuence controller of the simon game changes his current secuence to the next
+        AllBeating();
     }
     
+    public virtual void FreedInitialize()
+    {
+        NoBeating();
+        SelectInstrumentToBeat(freedInstrumentIndx, 0.6f);
+    }
     public virtual void ConfigurateFinal()
     {
         // Called when the secuence in the simon game is finished
+    }
+    public void RestSyncInstrument()
+    {
+        for (var i = instruments.Length - 1; i >= 0; i--)
+        {
+            if (instruments[i] != instruments[0] && instruments[i] != instruments[freedInstrumentIndx] && instruments[i].isBeating == true)
+            {
+                SelectInstrumentToStopBeating(i);
+                return;
+            }
+        }
+
     }
     
     protected virtual void ReloadSong()
@@ -108,11 +115,31 @@ public class SoundtrackManager : MonoBehaviour
         Invoke(nameof(StartSongLater), 0.005f);
     }
 
-    public void SumConfiguration()
+    public virtual void RythmOnFreed()
+    {
+        SelectFollowingInstrument(1f);
+    }
+
+    public void SelectFollowingInstrument(float volume) 
+    {
+        for (int i = 0; i < instruments.Length; i++)
+        {
+            if (instruments[i].instrumentRef != null)
+            {
+                if (instruments[i].isBeating == false)
+                {
+                    SelectInstrumentToBeat(i, volume);
+                    break;
+                }
+            }
+
+        }
+    }
+    
+    public void SelectConfiguration(int indx)
     {
         // Sum aconfiguration is called every time secuence controller of the simon game changes his current secuence to the next
-        currentIteration++;
-        Configurate();
+        currentIteration = indx;
     }
 
     protected virtual void CheckIfMusicFinalized()
@@ -142,6 +169,7 @@ public class SoundtrackManager : MonoBehaviour
                 i.isBeating = false;
             }
         }
+        NoVolume();
     }
 
     protected void AllBeating()
@@ -153,6 +181,7 @@ public class SoundtrackManager : MonoBehaviour
                 i.isBeating = true;
             }
         }
+        MaxVolume();
     }
 
     protected void NoVolume()
@@ -173,6 +202,23 @@ public class SoundtrackManager : MonoBehaviour
             {
                 i.SetAudioVolume(1f);
             }
+        }
+    }
+    
+    protected void SelectInstrumentToBeat(int index, float volume)
+    {
+        if (instruments[index].instrumentRef != null)
+        {
+            instruments[index].isBeating = true;
+            duplicatedInstruments[index].SetAudioVolume(volume);
+        }
+    }
+    protected void SelectInstrumentToStopBeating(int index)
+    {
+        if (instruments[index].instrumentRef != null)
+        {
+            instruments[index].isBeating = false;
+            duplicatedInstruments[index].SetAudioVolume(0);
         }
     }
 

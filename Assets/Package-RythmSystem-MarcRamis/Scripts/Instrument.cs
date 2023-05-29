@@ -15,7 +15,7 @@ public class Instrument
 
     public void UpdateSpectrumIntensity()
     {
-        if (instrumentRef != null)
+        if (instrumentRef != null && isBeating == true)
         {
             intensity = SpectrumOperations.CalculateSpectrumIntensity(this);
         }

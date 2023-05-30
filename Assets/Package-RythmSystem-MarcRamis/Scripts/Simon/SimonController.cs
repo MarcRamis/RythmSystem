@@ -9,8 +9,6 @@ public class SimonController : MonoBehaviour
     [SerializeField] public SequenceController sequenceController; // Referencia al controlador de secuencias
     [SerializeField] public List<SequenceController> sequenceControllers; // Referencia que contiene todos los controladores de secuencias
 
-    protected ButtonsSequence buttonsSequence; // Secuencia de botones actual
-    protected bool rythmMoment; // Variable que indica si se está en un momento de ritmo
     protected bool simonIsPlaying = false; // Indica si el minijuego se está ejecutando
 
     public static SimonController instance;
